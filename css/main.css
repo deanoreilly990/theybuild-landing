@@ -205,13 +205,14 @@ ul li {
 }
 img.logo{
 	width: 170px;
+	border-radius: 50%;
 }
 #countdown .item:nth-child(1){margin: 0;/* border-left: none; */}
 #countdown .item:nth-child(2){}
 #countdown .item:nth-child(3){/* background: rgb(38, 175, 38); */}
 #countdown .item:nth-child(4){/* background: rgb(230, 158, 21); */}
 .type-wrap span strong{
-    color: #FFC107;
+    color: #94e8ff;
     text-transform: uppercase;
 }
 #countdown .item:nth-child(4):before{

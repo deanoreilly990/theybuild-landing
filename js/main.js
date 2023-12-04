@@ -5,9 +5,11 @@ jQuery(document).ready(function() {
         Background slideshow
     */
 	$('.banner-area').backstretch([
-	                     "images/aaron-burden-25846-unsplash.jpg"
-	                   , "images/georgie-cobbs-467923-unsplash.jpg",
-                            "images/image-3.jpg"
+	                     "images/alexandre-caron-18ekxPdeVQw-unsplash.jpg"
+	                   , "images/debby-hudson-gJylsVMSf-k-unsplash.jpg",
+                            "images/famara-marmiesse-Gbgid8-6WEQ-unsplash.jpg",
+							"images/image-3.jpg",
+							"images/jazon-kovats-UES2PnGjiCU-unsplash.jpg"
 	                  ], {duration: 3000, fade: 750});
 	
 
