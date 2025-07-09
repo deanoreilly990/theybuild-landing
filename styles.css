@@ -335,9 +335,9 @@ body {
 .flow-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     position: relative;
 }
 
@@ -398,11 +398,11 @@ body {
 }
 
 .arrow-1 {
-    left: 20%;
+    left: 16%;
 }
 
 .arrow-2 {
-    left: 60%;
+    left: 40%;
 }
 
 .arrow-line {
@@ -458,11 +458,15 @@ body {
 }
 
 .arrow-3 {
-    right: 20%;
+    right: 28%;
 }
 
 .arrow-4 {
-    left: 20%;
+    right: 12%;
+}
+
+.arrow-5 {
+    left: 16%;
 }
 
 .arrow-line.return {
@@ -549,6 +553,72 @@ body {
 .benefit-card p {
     color: rgba(17, 17, 17, 0.7);
     line-height: 1.6;
+}
+
+/* Family Node Styling */
+.flow-node.family {
+    background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--secondary-cyan) 100%);
+    color: var(--dark);
+}
+
+.flow-node.family .node-icon {
+    background: var(--light);
+}
+
+.flow-node.family .node-icon i {
+    color: var(--secondary-cyan);
+}
+
+/* Flow Steps Styling */
+.flow-steps {
+    background: var(--light);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 1px solid rgba(148, 232, 255, 0.2);
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    opacity: 0.4;
+    transition: var(--transition);
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    padding: 1rem;
+}
+
+.step-item.active {
+    opacity: 1;
+    background: rgba(148, 232, 255, 0.1);
+    border: 1px solid rgba(148, 232, 255, 0.3);
+    transform: scale(1.02);
+}
+
+.step-number {
+    background: var(--gradient);
+    color: var(--dark);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.step-item.active .step-number {
+    background: var(--secondary-cyan);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.step-text {
+    font-weight: 500;
+    color: var(--dark);
 }
 
 /* Calculator Section */
@@ -720,6 +790,50 @@ select:focus {
     font-weight: 600;
     color: var(--dark);
     z-index: 2;
+}
+
+.cost-breakdown {
+    background: rgba(148, 232, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(148, 232, 255, 0.3);
+}
+
+.cost-breakdown h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    padding: 0.25rem 0;
+}
+
+.cost-item.highlight {
+    color: var(--secondary-cyan);
+    font-weight: 600;
+}
+
+.cost-item.total {
+    border-top: 1px solid rgba(148, 232, 255, 0.3);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.cost-label {
+    color: rgba(17, 17, 17, 0.8);
+}
+
+.cost-value {
+    font-weight: 600;
+    color: var(--dark);
 }
 
 .savings-summary {
@@ -1030,12 +1144,21 @@ select:focus {
     }
 
     .flow-container {
-        grid-template-columns: 1fr;
-        gap: 3rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
     }
 
     .flow-arrow {
         display: none;
+    }
+
+    .flow-steps {
+        margin-top: 2rem;
+    }
+
+    .step-item {
+        padding: 0.75rem;
+        margin: 0.25rem 0;
     }
 
     .calculator-container {
@@ -1080,7 +1203,27 @@ select:focus {
         padding: 1.5rem;
     }
 
+    .flow-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
     .benefits-grid {
         grid-template-columns: 1fr;
+    }
+
+    .step-item {
+        padding: 0.5rem;
+        margin: 0.25rem 0;
+    }
+
+    .step-number {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    .cost-breakdown {
+        padding: 1rem;
     }
 }

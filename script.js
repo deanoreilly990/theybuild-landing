@@ -33,13 +33,15 @@ window.addEventListener('scroll', () => {
 class MoneyFlowAnimation {
     constructor() {
         this.isAnimating = false;
-        this.animationSpeed = 2000; // 2 seconds per step
+        this.animationSpeed = 2500; // 2.5 seconds per step
         this.personalNode = document.getElementById('personal-node');
-        this.companyNode = document.getElementById('company-node');
         this.trustNode = document.getElementById('trust-node');
+        this.companyNode = document.getElementById('company-node');
+        this.familyNode = document.getElementById('family-node');
         this.personalAmount = document.getElementById('personal-amount');
-        this.companyAmount = document.getElementById('company-amount');
         this.trustAmount = document.getElementById('trust-amount');
+        this.companyAmount = document.getElementById('company-amount');
+        this.familyAmount = document.getElementById('family-amount');
         this.startBtn = document.getElementById('start-animation');
         this.resetBtn = document.getElementById('reset-animation');
         
@@ -58,31 +60,42 @@ class MoneyFlowAnimation {
         this.startBtn.disabled = true;
         this.resetFlow();
         
-        // Step 1: Personal to Company (Loan)
+        // Step 1: Personal loans to Trust
         setTimeout(() => {
-            this.animateTransfer(this.personalNode, this.companyNode, 100000, 0);
-            this.updateAmounts(50000, 50000, 0);
+            this.activateStep(1);
+            this.animateTransfer(this.personalNode, this.trustNode);
+            this.updateAmounts(50000, 50000, 0, 0);
         }, 500);
         
-        // Step 2: Company to Trust (Investment)
+        // Step 2: Trust loans to Company
         setTimeout(() => {
-            this.animateTransfer(this.companyNode, this.trustNode, 50000, 0);
-            this.updateAmounts(50000, 0, 50000);
+            this.activateStep(2);
+            this.animateTransfer(this.trustNode, this.companyNode);
+            this.updateAmounts(50000, 0, 50000, 0);
         }, this.animationSpeed + 500);
         
-        // Step 3: Trust back to Company (Interest to Family)
+        // Step 3: Company repays Trust with interest
         setTimeout(() => {
-            this.animateReturn(this.trustNode, this.companyNode);
-            this.updateAmounts(50000, 8000, 42000);
+            this.activateStep(3);
+            this.animateReturn(this.companyNode, this.trustNode);
+            this.updateAmounts(50000, 55000, 0, 0);
         }, this.animationSpeed * 2 + 500);
         
-        // Step 4: Company back to Personal (Principal + Interest)
+        // Step 4: Trust distributes tax-free interest to family
         setTimeout(() => {
-            this.animateReturn(this.companyNode, this.personalNode);
-            this.updateAmounts(108000, 0, 42000);
+            this.activateStep(4);
+            this.animateReturn(this.trustNode, this.familyNode);
+            this.updateAmounts(50000, 50000, 0, 5000);
+        }, this.animationSpeed * 3 + 500);
+        
+        // Step 5: Trust repays principal to personal
+        setTimeout(() => {
+            this.activateStep(5);
+            this.animateReturn(this.trustNode, this.personalNode);
+            this.updateAmounts(100000, 0, 0, 5000);
             this.isAnimating = false;
             this.startBtn.disabled = false;
-        }, this.animationSpeed * 3 + 500);
+        }, this.animationSpeed * 4 + 500);
     }
 
     animateTransfer(fromNode, toNode, amount, delay) {
@@ -112,10 +125,24 @@ class MoneyFlowAnimation {
         }, 1000);
     }
 
-    updateAmounts(personal, company, trust) {
+    activateStep(stepNumber) {
+        // Remove active class from all steps
+        document.querySelectorAll('.step-item').forEach(step => {
+            step.classList.remove('active');
+        });
+        
+        // Add active class to current step
+        const currentStep = document.getElementById(`step-${stepNumber}`);
+        if (currentStep) {
+            currentStep.classList.add('active');
+        }
+    }
+
+    updateAmounts(personal, trust, company, family) {
         this.animateValueChange(this.personalAmount, personal);
-        this.animateValueChange(this.companyAmount, company);
         this.animateValueChange(this.trustAmount, trust);
+        this.animateValueChange(this.companyAmount, company);
+        this.animateValueChange(this.familyAmount, family);
     }
 
     animateValueChange(element, targetValue) {
@@ -139,15 +166,21 @@ class MoneyFlowAnimation {
     }
 
     resetFlow() {
-        // Remove active classes
+        // Remove active classes from nodes
         document.querySelectorAll('.flow-node').forEach(node => {
             node.classList.remove('active');
         });
         
+        // Remove active classes from steps
+        document.querySelectorAll('.step-item').forEach(step => {
+            step.classList.remove('active');
+        });
+        
         // Reset amounts
         this.personalAmount.textContent = '$100,000';
-        this.companyAmount.textContent = '$0';
         this.trustAmount.textContent = '$0';
+        this.companyAmount.textContent = '$0';
+        this.familyAmount.textContent = '$0';
         
         // Remove arrow animations
         document.querySelectorAll('.arrow-line').forEach(arrow => {
@@ -168,12 +201,19 @@ class TaxCalculator {
         this.locationSelect = document.getElementById('location');
         this.investmentAmountInput = document.getElementById('investment-amount');
         
-        this.taxRates = {
-            au: { personal: 0.37, company: 0.25, trusts: 0.15 },
-            us: { personal: 0.35, company: 0.21, trusts: 0.18 },
-            uk: { personal: 0.40, company: 0.19, trusts: 0.20 },
-            ca: { personal: 0.33, company: 0.26, trusts: 0.16 }
-        };
+        // Australian Tax Brackets 2024
+        this.auTaxBrackets = [
+            { min: 0, max: 18200, rate: 0 },
+            { min: 18201, max: 45000, rate: 0.19 },
+            { min: 45001, max: 120000, rate: 0.325 },
+            { min: 120001, max: 180000, rate: 0.37 },
+            { min: 180001, max: Infinity, rate: 0.45 }
+        ];
+
+        this.companyTaxRate = 0.25; // Australian company tax rate
+        this.theybuildSetupCost = 650;
+        this.theybuildMonthlyCost = 20;
+        this.annualTheybuildCost = this.theybuildSetupCost + (this.theybuildMonthlyCost * 12);
         
         this.initializeCalculator();
     }
@@ -191,30 +231,43 @@ class TaxCalculator {
         });
     }
 
+    calculateAustralianTax(income) {
+        let tax = 0;
+        for (const bracket of this.auTaxBrackets) {
+            if (income > bracket.min) {
+                const taxableInThisBracket = Math.min(income, bracket.max) - bracket.min + 1;
+                tax += taxableInThisBracket * bracket.rate;
+            }
+        }
+        return tax;
+    }
+
     calculateSavings() {
         const annualIncome = parseFloat(this.annualIncomeInput.value) || 0;
         const investmentAmount = parseFloat(this.investmentAmountInput.value) || 0;
-        const location = this.locationSelect.value;
         
         if (annualIncome === 0 || investmentAmount === 0) {
             alert('Please enter valid income and investment amounts');
             return;
         }
         
-        const rates = this.taxRates[location];
-        
-        // Traditional setup calculation
-        const traditionalTax = investmentAmount * rates.personal;
+        // Traditional setup: Investment income taxed at personal rate
+        const personalTaxRate = this.calculateAustralianTax(annualIncome + investmentAmount) - this.calculateAustralianTax(annualIncome);
+        const traditionalTax = personalTaxRate;
         const traditionalAfterTax = investmentAmount - traditionalTax;
         
-        // Optimized setup calculation (with trust and company structure)
-        const companyTax = investmentAmount * rates.company;
-        const trustTax = (investmentAmount - companyTax) * rates.trusts;
-        const optimizedTax = companyTax + trustTax;
+        // Theybuild setup: Company structure with tax deductions
+        const companyTax = investmentAmount * this.companyTaxRate;
+        const theybuildCostDeduction = this.annualTheybuildCost * this.companyTaxRate; // Tax deductible
+        const optimizedTax = companyTax - theybuildCostDeduction;
         const optimizedAfterTax = investmentAmount - optimizedTax;
         
+        // Net cost after tax deductions
+        const netTheybuildCost = this.annualTheybuildCost - theybuildCostDeduction;
+        
         // Savings calculation
-        const annualSavings = traditionalTax - optimizedTax;
+        const grossSavings = traditionalTax - optimizedTax;
+        const annualSavings = grossSavings - netTheybuildCost;
         const decadeSavings = annualSavings * 10;
         const roiImprovement = ((optimizedAfterTax - traditionalAfterTax) / traditionalAfterTax) * 100;
         
@@ -225,7 +278,8 @@ class TaxCalculator {
             optimizedAfterTax,
             annualSavings,
             decadeSavings,
-            roiImprovement
+            roiImprovement,
+            netTheybuildCost
         });
     }
 
@@ -470,7 +524,15 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = entry.target.textContent;
-                animateCounter(entry.target, target);
+                if (target.includes('$400K+')) {
+                    animateCounter(entry.target, '$400K+');
+                } else if (target.includes('$150K+')) {
+                    animateCounter(entry.target, '$150K+');
+                } else if (target.includes('25+')) {
+                    animateCounter(entry.target, '25+');
+                } else {
+                    animateCounter(entry.target, target);
+                }
                 statsObserver.unobserve(entry.target);
             }
         });

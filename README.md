@@ -1,6 +1,15 @@
-# Theybuild.io Landing Page
+# Theybuild.io Landing Page - Version 0.2
 
 A professional, animated landing page for Theybuild.io - an investment capital automation platform that helps individuals maximize their wealth through trust and company structures.
+
+## Version 0.2 Updates
+
+- **Updated Money Flow**: Personal → Trust → Company → (returns) → Company → Trust → Family & Trust → Personal
+- **Step-by-step Animation**: Added visual step descriptions that highlight during animation
+- **Corrected Statistics**: Fixed hero stats to show $400K+, $150K+, and 25+ (and growing)
+- **Australian Tax Calculator**: Implemented proper Australian tax brackets (2024) with 25% company tax
+- **Theybuild Cost Integration**: Added $650 setup + $20/month with tax deductibility calculations
+- **Enhanced UI**: Improved family icon, trust umbrella icon, and mobile responsiveness
 
 ## Features
 

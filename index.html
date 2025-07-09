@@ -50,16 +50,16 @@
                 </div>
                 <div class="hero-stats">
                     <div class="stat">
-                        <div class="stat-number">$2.5M+</div>
+                        <div class="stat-number">$400K+</div>
                         <div class="stat-label">Capital Unlocked</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number">35%</div>
+                        <div class="stat-number">$150K+</div>
                         <div class="stat-label">Avg Tax Savings</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Happy Clients</div>
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label">Happy Clients (and growing)</div>
                     </div>
                 </div>
             </div>
@@ -97,11 +97,27 @@
                         <div class="node-amount" id="personal-amount">$100,000</div>
                     </div>
 
-                    <!-- Arrow 1 -->
+                    <!-- Arrow 1: Personal to Trust -->
                     <div class="flow-arrow arrow-1">
                         <div class="arrow-line"></div>
                         <div class="arrow-head"></div>
-                        <div class="flow-label">Loan with Interest</div>
+                        <div class="flow-label">Loan to Trust</div>
+                    </div>
+
+                    <!-- Trust -->
+                    <div class="flow-node trust" id="trust-node">
+                        <div class="node-icon">
+                            <i class="fas fa-umbrella"></i>
+                        </div>
+                        <div class="node-label">Family Trust</div>
+                        <div class="node-amount" id="trust-amount">$0</div>
+                    </div>
+
+                    <!-- Arrow 2: Trust to Company -->
+                    <div class="flow-arrow arrow-2">
+                        <div class="arrow-line"></div>
+                        <div class="arrow-head"></div>
+                        <div class="flow-label">Loan to Company</div>
                     </div>
 
                     <!-- Company -->
@@ -113,35 +129,61 @@
                         <div class="node-amount" id="company-amount">$0</div>
                     </div>
 
-                    <!-- Arrow 2 -->
-                    <div class="flow-arrow arrow-2">
-                        <div class="arrow-line"></div>
-                        <div class="arrow-head"></div>
-                        <div class="flow-label">Investment Capital</div>
-                    </div>
-
-                    <!-- Trust -->
-                    <div class="flow-node trust" id="trust-node">
+                    <!-- Family Member Node -->
+                    <div class="flow-node family" id="family-node">
                         <div class="node-icon">
-                            <i class="fas fa-shield-alt"></i>
+                            <i class="fas fa-users"></i>
                         </div>
-                        <div class="node-label">Family Trust</div>
-                        <div class="node-amount" id="trust-amount">$0</div>
+                        <div class="node-label">Family Members</div>
+                        <div class="node-amount" id="family-amount">$0</div>
                     </div>
 
                     <!-- Return Arrows -->
                     <div class="return-flow">
+                        <!-- Company to Trust -->
                         <div class="flow-arrow arrow-3">
                             <div class="arrow-line return"></div>
                             <div class="arrow-head return"></div>
-                            <div class="flow-label">Interest to Family</div>
+                            <div class="flow-label">Repay with Interest</div>
                         </div>
 
+                        <!-- Trust to Family -->
                         <div class="flow-arrow arrow-4">
+                            <div class="arrow-line return"></div>
+                            <div class="arrow-head return"></div>
+                            <div class="flow-label">Tax-free Interest</div>
+                        </div>
+
+                        <!-- Trust to Personal -->
+                        <div class="flow-arrow arrow-5">
                             <div class="arrow-line return"></div>
                             <div class="arrow-head return"></div>
                             <div class="flow-label">Principal Repayment</div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Step-by-step descriptions -->
+                <div class="flow-steps" id="flow-steps">
+                    <div class="step-item" id="step-1">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Personal loans money to Family Trust</div>
+                    </div>
+                    <div class="step-item" id="step-2">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Trust loans money to Company for investments</div>
+                    </div>
+                    <div class="step-item" id="step-3">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Company repays Trust with interest</div>
+                    </div>
+                    <div class="step-item" id="step-4">
+                        <div class="step-number">4</div>
+                        <div class="step-text">Trust distributes tax-free interest to family</div>
+                    </div>
+                    <div class="step-item" id="step-5">
+                        <div class="step-number">5</div>
+                        <div class="step-text">Trust repays principal to personal account</div>
                     </div>
                 </div>
 
@@ -165,7 +207,7 @@
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">
-                        <i class="fas fa-family"></i>
+                        <i class="fas fa-users"></i>
                     </div>
                     <h3>Family Wealth</h3>
                     <p>Build generational wealth through trust distributions</p>
@@ -240,6 +282,30 @@
                                 <div class="bar-fill" id="optimized-bar"></div>
                                 <div class="bar-value" id="optimized-value">$0</div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="cost-breakdown">
+                        <h4>Theybuild.io Cost Breakdown</h4>
+                        <div class="cost-item">
+                            <span class="cost-label">Setup Cost:</span>
+                            <span class="cost-value">$650 (one-time)</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Monthly Subscription:</span>
+                            <span class="cost-value">$20/month</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Annual Cost:</span>
+                            <span class="cost-value">$890</span>
+                        </div>
+                        <div class="cost-item highlight">
+                            <span class="cost-label">Tax Deduction (25%):</span>
+                            <span class="cost-value">-$222.50</span>
+                        </div>
+                        <div class="cost-item total">
+                            <span class="cost-label">Net Annual Cost:</span>
+                            <span class="cost-value">$667.50</span>
                         </div>
                     </div>
 
