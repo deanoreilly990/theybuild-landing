@@ -1,18 +1,21 @@
-# Theybuild.io Landing Page - Version 0.4
+# Theybuild.io Landing Page - Version 0.5
 
 A professional, animated landing page for Theybuild.io - an investment capital automation platform that helps individuals maximize their wealth through trust and company structures.
 
-## Version 0.4 Updates
+## Version 0.5 Updates - Per User Instructions
 
-- **Fixed Hero Title**: Removed problematic span tags causing visual errors, now clean gradient text
-- **Enhanced Hero Animation**: Added $100K scenario with 6 tiles (Start, Tax Man, Personal, Company, Trust, Family)
-- **Realistic Money Flow**: Shows tax reduction from 22.5K to 12.5K, then distribution to company (5K), trust (5K), family (5K), personal (50K)
-- **Updated Statistics**: Capital unlocked ~$2.5M, avg tax savings $120K, happy clients 20+ (and growing)
-- **Improved Chart Section**: Better spacing, progressive loading (loss first, then gains), visual $0 centerline
-- **Better Off Popup**: Dynamic popup showing total benefit amount and percentage improvement
-- **Enhanced Process Flow**: Increased spacing between elements, better visual separation
-- **Progressive Chart Animation**: Traditional setup loads first with shake effect, then Theybuild gains with pop-in effect
-- **Auto-Start Hero**: Hero animation begins automatically after 2 seconds for immediate engagement
+- **Hero Visual Animation**: Elements now hidden initially and appear step-by-step during animation progression
+- **Start Hero Amount**: Changed to white color with bold font weight for better visibility
+- **Statistics Values**: Updated to display ~$2.5M capital unlocked, $120K avg tax savings, 20+ happy clients (and growing)
+- **Chart Labels**: Added more boundary with padding, borders, and increased spacing for better visual presentation
+- **Bar Values**: Changed text color to black with white text shadow for better readability
+- **Better Off Popup**: Moved under comparison chart, above cost breakdown for better flow
+- **Multi-Year Tax Calculations**: 
+  - Replaced simple annual calculations with complex 1, 3, and 5-year scenarios
+  - Based on 20% compounded growth of investment amounts
+  - Compares traditional personal tax rates vs 25% company tax bracket
+  - Deducts net annual Theybuild.io costs (tax deductible)
+  - Shows progressive savings over time with compound benefits
 
 ## Previous Version 0.2 Updates
 

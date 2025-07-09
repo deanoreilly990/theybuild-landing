@@ -251,36 +251,63 @@ class TaxCalculator {
             return;
         }
         
-        // Traditional setup: Investment income taxed at personal rate
-        const personalTaxRate = this.calculateAustralianTax(annualIncome + investmentAmount) - this.calculateAustralianTax(annualIncome);
-        const traditionalTax = personalTaxRate;
-        const traditionalAfterTax = investmentAmount - traditionalTax;
+        // Calculate multi-year scenarios
+        const results = this.calculateMultiYearScenarios(annualIncome, investmentAmount);
         
-        // Theybuild setup: Company structure with tax deductions
-        const companyTax = investmentAmount * this.companyTaxRate;
-        const theybuildCostDeduction = this.annualTheybuildCost * this.companyTaxRate; // Tax deductible
-        const optimizedTax = companyTax - theybuildCostDeduction;
-        const optimizedAfterTax = investmentAmount - optimizedTax;
+        this.displayResults(results);
+    }
+
+    calculateMultiYearScenarios(annualIncome, investmentAmount) {
+        const growthRate = 0.20; // 20% annual growth
+        const netTheybuildCost = this.annualTheybuildCost - (this.annualTheybuildCost * this.companyTaxRate);
         
-        // Net cost after tax deductions
-        const netTheybuildCost = this.annualTheybuildCost - theybuildCostDeduction;
+        // Calculate for 1, 3, and 5 years
+        const scenarios = {};
         
-        // Savings calculation
-        const grossSavings = traditionalTax - optimizedTax;
-        const annualSavings = grossSavings - netTheybuildCost;
-        const decadeSavings = annualSavings * 10;
-        const roiImprovement = ((optimizedAfterTax - traditionalAfterTax) / traditionalAfterTax) * 100;
-        
-        this.displayResults({
-            traditionalTax,
-            optimizedTax,
-            traditionalAfterTax,
-            optimizedAfterTax,
-            annualSavings,
-            decadeSavings,
-            roiImprovement,
-            netTheybuildCost
+        [1, 3, 5].forEach(years => {
+            let traditionalTotal = 0;
+            let theybuildTotal = 0;
+            let currentInvestment = investmentAmount;
+            
+            for (let year = 1; year <= years; year++) {
+                // Traditional scenario: 20% growth taxed at personal rate
+                const traditionalGrowth = currentInvestment * growthRate;
+                const traditionalTaxOnGrowth = this.calculateAustralianTax(annualIncome + traditionalGrowth) - this.calculateAustralianTax(annualIncome);
+                const traditionalAfterTax = traditionalGrowth - traditionalTaxOnGrowth;
+                traditionalTotal += traditionalAfterTax;
+                
+                // Theybuild scenario: 20% growth taxed at company rate (25%)
+                const theybuildGrowth = currentInvestment * growthRate;
+                const theybuildTaxOnGrowth = theybuildGrowth * this.companyTaxRate;
+                const theybuildAfterTax = theybuildGrowth - theybuildTaxOnGrowth - netTheybuildCost;
+                theybuildTotal += theybuildAfterTax;
+                
+                // Compound the investment for next year
+                currentInvestment += theybuildAfterTax;
+            }
+            
+            scenarios[`year${years}`] = {
+                traditionalTotal: traditionalTotal,
+                theybuildTotal: theybuildTotal,
+                savings: theybuildTotal - traditionalTotal
+            };
         });
+        
+        // Calculate basic values for chart display
+        const year1Traditional = scenarios.year1.traditionalTotal - scenarios.year1.theybuildTotal;
+        const year1Theybuild = scenarios.year1.savings;
+        const roiImprovement = ((scenarios.year5.theybuildTotal - scenarios.year5.traditionalTotal) / scenarios.year5.traditionalTotal) * 100;
+        
+        return {
+            traditionalTax: Math.abs(year1Traditional),
+            optimizedTax: 0,
+            annualSavings: year1Theybuild,
+            year1Savings: scenarios.year1.savings,
+            year3Savings: scenarios.year3.savings,
+            year5Savings: scenarios.year5.savings,
+            roiImprovement: roiImprovement,
+            netTheybuildCost: netTheybuildCost
+        };
     }
 
     displayResults(results) {
@@ -293,8 +320,9 @@ class TaxCalculator {
         // Update values
         document.getElementById('traditional-value').textContent = `-$${results.traditionalTax.toLocaleString()}`;
         document.getElementById('optimized-value').textContent = `+$${Math.abs(results.annualSavings).toLocaleString()}`;
-        document.getElementById('annual-savings').textContent = `$${results.annualSavings.toLocaleString()}`;
-        document.getElementById('decade-savings').textContent = `$${results.decadeSavings.toLocaleString()}`;
+        document.getElementById('year-1-savings').textContent = `$${results.year1Savings.toLocaleString()}`;
+        document.getElementById('year-3-savings').textContent = `$${results.year3Savings.toLocaleString()}`;
+        document.getElementById('year-5-savings').textContent = `$${results.year5Savings.toLocaleString()}`;
         document.getElementById('roi-improvement').textContent = `${results.roiImprovement.toFixed(1)}%`;
         
         // Show better off popup after chart animation
@@ -610,53 +638,63 @@ class HeroAnimation {
         this.playBtn.disabled = true;
         this.resetHeroFlow();
         
-        // Step 1: Wait 1 second, then start with 100K
+        // Step 1: Show start tile with 100K
         setTimeout(() => {
+            this.showElement(this.startHero);
             this.highlightNode(this.startHero);
         }, 1000);
         
-        // Step 2: Tax man takes 22.5K
+        // Step 2: Show tax man and takes 22.5K
         setTimeout(() => {
+            this.showElement(this.taxmanHero);
             this.highlightNode(this.taxmanHero);
             this.updateAmount(this.taxmanHero, '$22.5K');
             this.updateAmount(this.startHero, '$77.5K');
-        }, 2000);
+        }, 2500);
         
-        // Step 3: Tax man reduced to 12.5K
+        // Step 3: Tax man reduced to 12.5K (Theybuild optimization)
         setTimeout(() => {
             this.updateAmount(this.taxmanHero, '$12.5K');
             this.updateAmount(this.startHero, '$87.5K');
-        }, 3000);
+        }, 4000);
         
-        // Step 4: Company gets 5K
+        // Step 4: Show company and gets 5K
         setTimeout(() => {
+            this.showElement(this.companyHero);
             this.highlightNode(this.companyHero);
             this.updateAmount(this.companyHero, '$5K');
             this.updateAmount(this.startHero, '$82.5K');
-        }, 4000);
+        }, 5500);
         
-        // Step 5: Trust gets 5K
+        // Step 5: Show trust and gets 5K
         setTimeout(() => {
+            this.showElement(this.trustHero);
             this.highlightNode(this.trustHero);
             this.updateAmount(this.trustHero, '$5K');
             this.updateAmount(this.startHero, '$77.5K');
-        }, 5000);
+        }, 7000);
         
-        // Step 6: Family gets 5K
+        // Step 6: Show family and gets 5K
         setTimeout(() => {
+            this.showElement(this.familyHero);
             this.highlightNode(this.familyHero);
             this.updateAmount(this.familyHero, '$5K');
             this.updateAmount(this.trustHero, '$0');
-        }, 6000);
+        }, 8500);
         
-        // Step 7: Personal gets remaining 50K
+        // Step 7: Show personal and gets remaining 50K
         setTimeout(() => {
+            this.showElement(this.personalHero);
             this.highlightNode(this.personalHero);
             this.updateAmount(this.personalHero, '$50K');
             this.updateAmount(this.startHero, '$27.5K');
             this.isAnimating = false;
             this.playBtn.disabled = false;
-        }, 7000);
+        }, 10000);
+    }
+
+    showElement(node) {
+        node.classList.add('visible');
     }
 
     highlightNode(node) {
@@ -682,9 +720,10 @@ class HeroAnimation {
     }
 
     resetHeroFlow() {
-        // Remove highlights
+        // Remove highlights and hide all elements
         document.querySelectorAll('.hero-flow-item').forEach(item => {
             item.classList.remove('highlighted');
+            item.classList.remove('visible');
         });
         
         // Reset amounts
