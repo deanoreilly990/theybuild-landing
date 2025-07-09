@@ -853,22 +853,22 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const stats = document.querySelectorAll('.stat-number');
     
-    const animateCounter = (element, target, duration = 2000) => {
+    const animateCounter = (element, finalText, targetNumber, suffix = '', duration = 2000) => {
         const start = 0;
-        const increment = target / (duration / 16);
+        const increment = targetNumber / (duration / 16);
         let current = start;
         
         const updateCounter = () => {
             current += increment;
-            if (current >= target) {
-                element.textContent = target.includes('%') ? target : target;
+            if (current >= targetNumber) {
+                element.textContent = finalText;
                 return;
             }
             
-            if (target.includes('$')) {
-                element.textContent = `$${Math.round(current * 1000) / 1000}M+`;
-            } else if (target.includes('%')) {
-                element.textContent = `${Math.round(current)}%`;
+            if (finalText.includes('~$') && finalText.includes('M')) {
+                element.textContent = `~$${(current / 1000).toFixed(1)}M`;
+            } else if (finalText.includes('$') && finalText.includes('K')) {
+                element.textContent = `$${Math.round(current)}K`;
             } else {
                 element.textContent = `${Math.round(current)}+`;
             }
@@ -884,15 +884,15 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = entry.target.textContent;
+                
                 if (target.includes('~$2.5M')) {
-                    animateCounter(entry.target, '~$2.5M');
+                    animateCounter(entry.target, '~$2.5M', 2500);
                 } else if (target.includes('$120K')) {
-                    animateCounter(entry.target, '$120K');
+                    animateCounter(entry.target, '$120K', 120);
                 } else if (target.includes('20+')) {
-                    animateCounter(entry.target, '20+');
-                } else {
-                    animateCounter(entry.target, target);
+                    animateCounter(entry.target, '20+', 20);
                 }
+                
                 statsObserver.unobserve(entry.target);
             }
         });
