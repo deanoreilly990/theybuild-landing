@@ -236,17 +236,19 @@ class TaxCalculator {
 
     setupNumberFormatting() {
         [this.annualIncomeInput, this.investmentAmountInput].forEach(input => {
-            input.addEventListener('input', (e) => {
+            // Format number when user finishes typing (on blur)
+            input.addEventListener('blur', (e) => {
                 let value = e.target.value.replace(/,/g, '');
-                if (!isNaN(value) && value !== '') {
+                if (!isNaN(value) && value !== '' && value !== '0') {
                     e.target.value = parseInt(value).toLocaleString();
                 }
             });
             
-            input.addEventListener('blur', (e) => {
+            // Remove formatting when user starts typing (on focus)
+            input.addEventListener('focus', (e) => {
                 let value = e.target.value.replace(/,/g, '');
                 if (!isNaN(value) && value !== '') {
-                    e.target.value = parseInt(value).toLocaleString();
+                    e.target.value = value;
                 }
             });
         });
