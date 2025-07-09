@@ -1,17 +1,18 @@
-# Theybuild.io Landing Page - Version 0.3
+# Theybuild.io Landing Page - Version 0.4
 
 A professional, animated landing page for Theybuild.io - an investment capital automation platform that helps individuals maximize their wealth through trust and company structures.
 
-## Version 0.3 Updates
+## Version 0.4 Updates
 
-- **Particles.js Background**: Added animated particle background with brand colors and center white fade
-- **Fixed Hero Title**: Resolved visual error with gradient text line breaks
-- **New Hero Animation**: Replaced floating cards with interactive money flow visualization showing You → Trust → Company
-- **Reordered Sections**: Calculator now comes first - users input their data then see personalized flow
-- **Enhanced Process Section**: Improved spacing and made descriptions more interactive around the flow
-- **Negative/Positive Chart**: Traditional setup now shows as negative loss, Theybuild shows as positive gain above/below $0 line
-- **Personalized Flow**: After calculation, users can see their exact numbers in the process animation
-- **Show Flow Button**: Smooth scroll from calculator results to personalized process visualization
+- **Fixed Hero Title**: Removed problematic span tags causing visual errors, now clean gradient text
+- **Enhanced Hero Animation**: Added $100K scenario with 6 tiles (Start, Tax Man, Personal, Company, Trust, Family)
+- **Realistic Money Flow**: Shows tax reduction from 22.5K to 12.5K, then distribution to company (5K), trust (5K), family (5K), personal (50K)
+- **Updated Statistics**: Capital unlocked ~$2.5M, avg tax savings $120K, happy clients 20+ (and growing)
+- **Improved Chart Section**: Better spacing, progressive loading (loss first, then gains), visual $0 centerline
+- **Better Off Popup**: Dynamic popup showing total benefit amount and percentage improvement
+- **Enhanced Process Flow**: Increased spacing between elements, better visual separation
+- **Progressive Chart Animation**: Traditional setup loads first with shake effect, then Theybuild gains with pop-in effect
+- **Auto-Start Hero**: Hero animation begins automatically after 2 seconds for immediate engagement
 
 ## Previous Version 0.2 Updates
 

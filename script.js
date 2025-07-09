@@ -287,8 +287,8 @@ class TaxCalculator {
         // Show results container
         this.resultsContainer.classList.add('active');
         
-        // Update chart bars - now showing negative for traditional and positive for Theybuild
-        this.updateChart(results.traditionalTax, results.annualSavings);
+        // Progressive chart loading - first show loss, then gain
+        this.updateChartProgressive(results.traditionalTax, results.annualSavings);
         
         // Update values
         document.getElementById('traditional-value').textContent = `-$${results.traditionalTax.toLocaleString()}`;
@@ -296,6 +296,11 @@ class TaxCalculator {
         document.getElementById('annual-savings').textContent = `$${results.annualSavings.toLocaleString()}`;
         document.getElementById('decade-savings').textContent = `$${results.decadeSavings.toLocaleString()}`;
         document.getElementById('roi-improvement').textContent = `${results.roiImprovement.toFixed(1)}%`;
+        
+        // Show better off popup after chart animation
+        setTimeout(() => {
+            this.showBetterOffPopup(results);
+        }, 2000);
         
         // Animate the results
         this.animateResults();
@@ -310,7 +315,7 @@ class TaxCalculator {
         }
     }
 
-    updateChart(traditionalLoss, theybuildGain) {
+    updateChartProgressive(traditionalLoss, theybuildGain) {
         const maxValue = Math.max(Math.abs(traditionalLoss), Math.abs(theybuildGain));
         const traditionalPercentage = (Math.abs(traditionalLoss) / maxValue) * 45; // Max 45% of container
         const theybuildPercentage = (Math.abs(theybuildGain) / maxValue) * 45; // Max 45% of container
@@ -322,15 +327,38 @@ class TaxCalculator {
         traditionalBar.style.width = '0%';
         optimizedBar.style.width = '0%';
         
-        // Animate traditional bar (negative - grows left from center)
+        // First show traditional loss with dramatic effect
         setTimeout(() => {
             traditionalBar.style.width = `${traditionalPercentage}%`;
-        }, 200);
+            traditionalBar.style.animation = 'shake 0.5s ease-in-out';
+        }, 300);
         
-        // Animate Theybuild bar (positive - grows right from center)
+        // Then show Theybuild gain with positive effect
         setTimeout(() => {
             optimizedBar.style.width = `${theybuildPercentage}%`;
-        }, 600);
+            optimizedBar.style.animation = 'popIn 0.6s ease-out';
+        }, 1000);
+    }
+
+    updateChart(traditionalLoss, theybuildGain) {
+        // Fallback to progressive method
+        this.updateChartProgressive(traditionalLoss, theybuildGain);
+    }
+
+    showBetterOffPopup(results) {
+        const popup = document.getElementById('better-off-popup');
+        const amountElement = document.getElementById('better-off-amount');
+        const percentageElement = document.getElementById('better-off-percentage');
+        
+        if (popup && amountElement && percentageElement) {
+            const totalBenefit = Math.abs(results.traditionalTax) + Math.abs(results.annualSavings);
+            const percentageImprovement = ((Math.abs(results.annualSavings) / Math.abs(results.traditionalTax)) * 100);
+            
+            amountElement.textContent = `$${totalBenefit.toLocaleString()}`;
+            percentageElement.textContent = `${percentageImprovement.toFixed(0)}% improvement`;
+            
+            popup.classList.add('show');
+        }
     }
 
     scrollToProcess() {
@@ -548,11 +576,136 @@ function initParticles() {
     });
 }
 
+// Hero Animation Class
+class HeroAnimation {
+    constructor() {
+        this.isAnimating = false;
+        this.startHero = document.getElementById('start-hero');
+        this.taxmanHero = document.getElementById('taxman-hero');
+        this.personalHero = document.getElementById('personal-hero');
+        this.companyHero = document.getElementById('company-hero');
+        this.trustHero = document.getElementById('trust-hero');
+        this.familyHero = document.getElementById('family-hero');
+        
+        this.playBtn = document.getElementById('hero-play-btn');
+        this.resetBtn = document.getElementById('hero-reset-btn');
+        
+        this.initializeHeroAnimation();
+    }
+
+    initializeHeroAnimation() {
+        this.playBtn.addEventListener('click', () => this.startHeroFlow());
+        this.resetBtn.addEventListener('click', () => this.resetHeroFlow());
+        
+        // Auto-start animation after 2 seconds
+        setTimeout(() => {
+            this.startHeroFlow();
+        }, 2000);
+    }
+
+    startHeroFlow() {
+        if (this.isAnimating) return;
+        
+        this.isAnimating = true;
+        this.playBtn.disabled = true;
+        this.resetHeroFlow();
+        
+        // Step 1: Wait 1 second, then start with 100K
+        setTimeout(() => {
+            this.highlightNode(this.startHero);
+        }, 1000);
+        
+        // Step 2: Tax man takes 22.5K
+        setTimeout(() => {
+            this.highlightNode(this.taxmanHero);
+            this.updateAmount(this.taxmanHero, '$22.5K');
+            this.updateAmount(this.startHero, '$77.5K');
+        }, 2000);
+        
+        // Step 3: Tax man reduced to 12.5K
+        setTimeout(() => {
+            this.updateAmount(this.taxmanHero, '$12.5K');
+            this.updateAmount(this.startHero, '$87.5K');
+        }, 3000);
+        
+        // Step 4: Company gets 5K
+        setTimeout(() => {
+            this.highlightNode(this.companyHero);
+            this.updateAmount(this.companyHero, '$5K');
+            this.updateAmount(this.startHero, '$82.5K');
+        }, 4000);
+        
+        // Step 5: Trust gets 5K
+        setTimeout(() => {
+            this.highlightNode(this.trustHero);
+            this.updateAmount(this.trustHero, '$5K');
+            this.updateAmount(this.startHero, '$77.5K');
+        }, 5000);
+        
+        // Step 6: Family gets 5K
+        setTimeout(() => {
+            this.highlightNode(this.familyHero);
+            this.updateAmount(this.familyHero, '$5K');
+            this.updateAmount(this.trustHero, '$0');
+        }, 6000);
+        
+        // Step 7: Personal gets remaining 50K
+        setTimeout(() => {
+            this.highlightNode(this.personalHero);
+            this.updateAmount(this.personalHero, '$50K');
+            this.updateAmount(this.startHero, '$27.5K');
+            this.isAnimating = false;
+            this.playBtn.disabled = false;
+        }, 7000);
+    }
+
+    highlightNode(node) {
+        // Remove highlight from all nodes
+        document.querySelectorAll('.hero-flow-item').forEach(item => {
+            item.classList.remove('highlighted');
+        });
+        
+        // Add highlight to current node
+        node.classList.add('highlighted');
+    }
+
+    updateAmount(node, amount) {
+        const amountElement = node.querySelector('.hero-amount');
+        if (amountElement) {
+            amountElement.style.transform = 'scale(1.2)';
+            amountElement.style.color = 'var(--secondary-cyan)';
+            setTimeout(() => {
+                amountElement.textContent = amount;
+                amountElement.style.transform = 'scale(1)';
+            }, 200);
+        }
+    }
+
+    resetHeroFlow() {
+        // Remove highlights
+        document.querySelectorAll('.hero-flow-item').forEach(item => {
+            item.classList.remove('highlighted');
+        });
+        
+        // Reset amounts
+        this.updateAmount(this.startHero, '$100K');
+        this.updateAmount(this.taxmanHero, '$0');
+        this.updateAmount(this.personalHero, '$0');
+        this.updateAmount(this.companyHero, '$0');
+        this.updateAmount(this.trustHero, '$0');
+        this.updateAmount(this.familyHero, '$0');
+        
+        this.isAnimating = false;
+        this.playBtn.disabled = false;
+    }
+}
+
 // Initialize components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize particles
     initParticles();
     
+    new HeroAnimation();
     new MoneyFlowAnimation();
     new TaxCalculator();
     
@@ -684,12 +837,12 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = entry.target.textContent;
-                if (target.includes('$400K+')) {
-                    animateCounter(entry.target, '$400K+');
-                } else if (target.includes('$150K+')) {
-                    animateCounter(entry.target, '$150K+');
-                } else if (target.includes('25+')) {
-                    animateCounter(entry.target, '25+');
+                if (target.includes('~$2.5M')) {
+                    animateCounter(entry.target, '~$2.5M');
+                } else if (target.includes('$120K')) {
+                    animateCounter(entry.target, '$120K');
+                } else if (target.includes('20+')) {
+                    animateCounter(entry.target, '20+');
                 } else {
                     animateCounter(entry.target, target);
                 }
