@@ -149,36 +149,73 @@
             <div class="calculator-container">
                 <div class="calculator-inputs">
                     <div class="input-group">
-                        <label for="annual-income">Annual Income</label>
+                        <label for="salary-income">
+                            Personal Salary Income (AUD)
+                            <span class="tooltip" data-tooltip="Your annual salary before tax, including wages, bonuses, and other employment income">ℹ️</span>
+                        </label>
                         <div class="input-wrapper">
                             <span class="input-prefix">$</span>
-                            <input type="text" id="annual-income" placeholder="150,000" inputmode="numeric">
-                        </div>
-                        <div id="tax-display" class="tax-display" style="display: none;">
-                            <!-- Tax information will be populated by JavaScript -->
+                            <input type="text" id="salary-income" placeholder="150,000" inputmode="numeric">
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <label for="location">Location</label>
-                        <select id="location">
-                            <option value="au">Australia</option>
-                            <option value="us">United States</option>
-                            <option value="uk">United Kingdom</option>
-                            <option value="ca">Canada</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="investment-amount">Investment Amount</label>
-                        <div class="input-wrapper">
-                            <span class="input-prefix">$</span>
-                            <input type="text" id="investment-amount" placeholder="50,000" inputmode="numeric">
+                        <label for="has-property">Do you own investment property?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="has-property" value="yes" id="property-yes">
+                                <span class="radio-custom"></span>
+                                Yes
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="has-property" value="no" id="property-no" checked>
+                                <span class="radio-custom"></span>
+                                No
+                            </label>
                         </div>
                     </div>
 
-                    <button class="calculate-button" id="calculate-btn">
-                        <i class="fas fa-calculator"></i> Calculate Savings
+                    <div class="property-inputs" id="property-inputs" style="display: none;">
+                        <div class="input-group">
+                            <label for="property-income">
+                                Annual Property Income (AUD)
+                                <span class="tooltip" data-tooltip="Total rental income received from investment properties">ℹ️</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">$</span>
+                                <input type="text" id="property-income" placeholder="30,000" inputmode="numeric">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="property-deductions">
+                                Annual Property Deductions (AUD)
+                                <span class="tooltip" data-tooltip="Tax-deductible expenses like interest, maintenance, management fees, depreciation">ℹ️</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">$</span>
+                                <input type="text" id="property-deductions" placeholder="25,000" inputmode="numeric">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="investment-amount">
+                            How much do you want to invest? (AUD)
+                            <span class="tooltip" data-tooltip="Additional investment capital you want to deploy through optimal tax structures">ℹ️</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="text" id="investment-amount" placeholder="100,000" inputmode="numeric">
+                        </div>
+                    </div>
+
+                    <div id="tax-summary" class="tax-summary" style="display: none;">
+                        <!-- Real-time tax calculation display -->
+                    </div>
+
+                    <button class="calculate-button" id="calculate-btn" style="display: none;">
+                        <i class="fas fa-chart-line"></i> View Detailed Comparison
                     </button>
                 </div>
 
@@ -212,26 +249,30 @@
                     </div>
 
                     <div class="cost-breakdown">
-                        <h4>Theybuild.io Cost Breakdown</h4>
+                        <h4>TheyBuild.io Cost Breakdown</h4>
                         <div class="cost-item">
-                            <span class="cost-label">Setup Cost:</span>
-                            <span class="cost-value">$650 (one-time)</span>
+                            <span class="cost-label">Setup Cost (Company + Trust):</span>
+                            <span class="cost-value">$3,500 (one-time)</span>
                         </div>
                         <div class="cost-item">
-                            <span class="cost-label">Monthly Subscription:</span>
-                            <span class="cost-value">$20/month</span>
+                            <span class="cost-label">Monthly Management:</span>
+                            <span class="cost-value">$200/month</span>
                         </div>
                         <div class="cost-item">
-                            <span class="cost-label">Annual Cost:</span>
-                            <span class="cost-value">$890</span>
+                            <span class="cost-label">Annual Accounting & Compliance:</span>
+                            <span class="cost-value">$2,400/year</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Total Annual Cost:</span>
+                            <span class="cost-value">$4,800</span>
                         </div>
                         <div class="cost-item highlight">
                             <span class="cost-label">Tax Deduction (25%):</span>
-                            <span class="cost-value">-$222.50</span>
+                            <span class="cost-value">-$1,200</span>
                         </div>
                         <div class="cost-item total">
                             <span class="cost-label">Net Annual Cost:</span>
-                            <span class="cost-value">$667.50</span>
+                            <span class="cost-value">$3,600</span>
                         </div>
                     </div>
 
