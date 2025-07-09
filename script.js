@@ -221,11 +221,32 @@ class TaxCalculator {
     initializeCalculator() {
         this.calculateBtn.addEventListener('click', () => this.calculateSavings());
         
+        // Add number formatting to inputs
+        this.setupNumberFormatting();
+        
         // Auto-calculate when inputs change
         [this.annualIncomeInput, this.locationSelect, this.investmentAmountInput].forEach(input => {
             input.addEventListener('change', () => {
                 if (this.annualIncomeInput.value && this.investmentAmountInput.value) {
                     this.calculateSavings();
+                }
+            });
+        });
+    }
+
+    setupNumberFormatting() {
+        [this.annualIncomeInput, this.investmentAmountInput].forEach(input => {
+            input.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/,/g, '');
+                if (!isNaN(value) && value !== '') {
+                    e.target.value = parseInt(value).toLocaleString();
+                }
+            });
+            
+            input.addEventListener('blur', (e) => {
+                let value = e.target.value.replace(/,/g, '');
+                if (!isNaN(value) && value !== '') {
+                    e.target.value = parseInt(value).toLocaleString();
                 }
             });
         });
@@ -243,61 +264,73 @@ class TaxCalculator {
     }
 
     calculateSavings() {
-        const annualIncome = parseFloat(this.annualIncomeInput.value) || 0;
-        const investmentAmount = parseFloat(this.investmentAmountInput.value) || 0;
+        // Parse values removing commas from formatted inputs
+        const annualIncome = parseFloat(this.annualIncomeInput.value.replace(/,/g, '')) || 0;
+        const investmentAmount = parseFloat(this.investmentAmountInput.value.replace(/,/g, '')) || 0;
         
         if (annualIncome === 0 || investmentAmount === 0) {
             alert('Please enter valid income and investment amounts');
             return;
         }
         
-        // Calculate multi-year scenarios
-        const results = this.calculateMultiYearScenarios(annualIncome, investmentAmount);
+        // Calculate investment growth tax scenarios
+        const results = this.calculateInvestmentTaxScenarios(annualIncome, investmentAmount);
         
         this.displayResults(results);
     }
 
-    calculateMultiYearScenarios(annualIncome, investmentAmount) {
+    calculateInvestmentTaxScenarios(annualIncome, investmentAmount) {
         const growthRate = 0.20; // 20% annual growth
         const netTheybuildCost = this.annualTheybuildCost - (this.annualTheybuildCost * this.companyTaxRate);
+        
+        // Get personal marginal tax rate based on income
+        const personalMarginalRate = this.getPersonalMarginalTaxRate(annualIncome);
         
         // Calculate for 1, 3, and 5 years
         const scenarios = {};
         
         [1, 3, 5].forEach(years => {
+            let traditionalValue = investmentAmount;
+            let theybuildValue = investmentAmount;
             let traditionalTotalTax = 0;
             let theybuildTotalTax = 0;
-            let traditionalCompoundedAmount = investmentAmount;
-            let theybuildCompoundedAmount = investmentAmount;
             
             for (let year = 1; year <= years; year++) {
-                // Traditional scenario: Investment grows, taxed at personal marginal rate
-                const traditionalGrowth = traditionalCompoundedAmount * growthRate;
-                const personalMarginalRate = this.getPersonalMarginalTaxRate(annualIncome);
+                // Traditional Scenario: Investment growth taxed at personal marginal rate
+                const traditionalGrowth = traditionalValue * growthRate;
                 const traditionalTaxOnGrowth = traditionalGrowth * personalMarginalRate;
-                const traditionalAfterTaxGrowth = traditionalGrowth - traditionalTaxOnGrowth;
+                const traditionalNetGrowth = traditionalGrowth - traditionalTaxOnGrowth;
+                traditionalValue += traditionalNetGrowth;
                 traditionalTotalTax += traditionalTaxOnGrowth;
-                traditionalCompoundedAmount += traditionalAfterTaxGrowth;
                 
-                // Theybuild scenario: Investment grows in company, taxed at 25% company rate
-                const theybuildGrowth = theybuildCompoundedAmount * growthRate;
+                // Theybuild Scenario: Investment growth taxed at 25% company rate
+                const theybuildGrowth = theybuildValue * growthRate;
                 const theybuildTaxOnGrowth = theybuildGrowth * this.companyTaxRate;
-                const theybuildAfterTaxGrowth = theybuildGrowth - theybuildTaxOnGrowth;
+                const theybuildNetGrowth = theybuildGrowth - theybuildTaxOnGrowth;
+                theybuildValue += theybuildNetGrowth;
                 theybuildTotalTax += theybuildTaxOnGrowth + netTheybuildCost;
-                theybuildCompoundedAmount += theybuildAfterTaxGrowth;
             }
             
             scenarios[`year${years}`] = {
                 traditionalTax: traditionalTotalTax,
                 theybuildTax: theybuildTotalTax,
                 savings: traditionalTotalTax - theybuildTotalTax,
-                traditionalFinalAmount: traditionalCompoundedAmount,
-                theybuildFinalAmount: theybuildCompoundedAmount
+                traditionalFinalValue: traditionalValue,
+                theybuildFinalValue: theybuildValue,
+                additionalWealth: theybuildValue - traditionalValue
             };
         });
         
-        // Calculate ROI improvement based on final amounts
-        const roiImprovement = ((scenarios.year5.theybuildFinalAmount - scenarios.year5.traditionalFinalAmount) / scenarios.year5.traditionalFinalAmount) * 100;
+        // Calculate ROI improvement based on final values
+        const roiImprovement = ((scenarios.year5.theybuildFinalValue - scenarios.year5.traditionalFinalValue) / scenarios.year5.traditionalFinalValue) * 100;
+        
+        console.log('Investment Tax Calculation Results:', {
+            income: annualIncome,
+            investment: investmentAmount,
+            personalMarginalRate: personalMarginalRate,
+            companyRate: this.companyTaxRate,
+            scenarios: scenarios
+        });
         
         return {
             traditionalTax: scenarios.year1.traditionalTax,
@@ -307,7 +340,8 @@ class TaxCalculator {
             year3Savings: scenarios.year3.savings,
             year5Savings: scenarios.year5.savings,
             roiImprovement: roiImprovement,
-            netTheybuildCost: netTheybuildCost
+            netTheybuildCost: netTheybuildCost,
+            personalMarginalRate: personalMarginalRate
         };
     }
 
@@ -416,7 +450,7 @@ class TaxCalculator {
         
         // Update the personal amount in the process section
         const personalAmount = document.getElementById('personal-amount');
-        const investmentAmount = parseFloat(document.getElementById('investment-amount').value) || 100000;
+        const investmentAmount = parseFloat(document.getElementById('investment-amount').value.replace(/,/g, '')) || 100000;
         
         if (personalAmount) {
             personalAmount.textContent = `$${investmentAmount.toLocaleString()}`;
@@ -430,7 +464,9 @@ class TaxCalculator {
             // Add a personalized message
             const subtitle = processSection.querySelector('.section-subtitle');
             if (subtitle) {
-                subtitle.innerHTML = `Watch your personalized money flow with $${investmentAmount.toLocaleString()} investment and $${Math.abs(results.annualSavings).toLocaleString()} annual savings`;
+                const personalRate = (results.personalMarginalRate * 100).toFixed(0);
+                subtitle.innerHTML = `Watch your personalized money flow with $${investmentAmount.toLocaleString()} investment<br>
+                <span style="font-size: 0.9em; color: var(--dark);">Personal tax rate: ${personalRate}% vs Company rate: 25% = $${Math.abs(results.annualSavings).toLocaleString()} annual savings</span>`;
                 subtitle.style.color = 'var(--secondary-cyan)';
                 subtitle.style.fontWeight = '600';
             }
