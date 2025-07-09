@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  </head>
 <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    <div class="background-overlay"></div>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -17,8 +21,8 @@
             </div>
             <div class="nav-menu">
                 <a href="#home" class="nav-link">Home</a>
-                <a href="#process" class="nav-link">Process</a>
                 <a href="#calculator" class="nav-link">Calculator</a>
+                <a href="#process" class="nav-link">Process</a>
                 <a href="#contact" class="nav-link">Contact</a>
                 <button class="cta-button">Get Started</button>
             </div>
@@ -35,8 +39,8 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span class="gradient-text">Unlock Your</span><br>
-                    Investment Capital
+                    <span class="gradient-text">Unlock Your</span>
+                    <span class="title-line-break">Investment Capital</span>
                 </h1>
                 <p class="hero-subtitle">
                     Automate your wealth with our advanced trust and company structures. 
@@ -64,17 +68,170 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="floating-card card-1">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Investment Growth</span>
+                <div class="hero-animation-container">
+                    <div class="hero-flow-item personal-hero" id="personal-hero">
+                        <div class="hero-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="hero-label">You</div>
+                        <div class="hero-amount">$100K</div>
+                    </div>
+                    
+                    <div class="hero-flow-arrow">
+                        <div class="hero-arrow-path">
+                            <div class="hero-arrow-dot" style="animation-delay: 0s;"></div>
+                            <div class="hero-arrow-dot" style="animation-delay: 0.3s;"></div>
+                            <div class="hero-arrow-dot" style="animation-delay: 0.6s;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-flow-item trust-hero" id="trust-hero">
+                        <div class="hero-icon">
+                            <i class="fas fa-umbrella"></i>
+                        </div>
+                        <div class="hero-label">Trust</div>
+                        <div class="hero-amount">$0</div>
+                    </div>
+                    
+                    <div class="hero-flow-arrow">
+                        <div class="hero-arrow-path">
+                            <div class="hero-arrow-dot" style="animation-delay: 0.9s;"></div>
+                            <div class="hero-arrow-dot" style="animation-delay: 1.2s;"></div>
+                            <div class="hero-arrow-dot" style="animation-delay: 1.5s;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-flow-item company-hero" id="company-hero">
+                        <div class="hero-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="hero-label">Company</div>
+                        <div class="hero-amount">$0</div>
+                    </div>
+                    
+                    <div class="hero-benefit-tags">
+                        <div class="benefit-tag tag-1">
+                            <i class="fas fa-percentage"></i>
+                            <span>Lower Tax Rate</span>
+                        </div>
+                        <div class="benefit-tag tag-2">
+                            <i class="fas fa-family"></i>
+                            <span>Family Benefits</span>
+                        </div>
+                        <div class="benefit-tag tag-3">
+                            <i class="fas fa-chart-trending-up"></i>
+                            <span>Wealth Growth</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="floating-card card-2">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Trust Protection</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <h2 class="section-title">Calculate Your Savings First</h2>
+            <p class="section-subtitle">Enter your details to see how much you could save, then we'll show you exactly how it works</p>
+            
+            <div class="calculator-container">
+                <div class="calculator-inputs">
+                    <div class="input-group">
+                        <label for="annual-income">Annual Income</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="annual-income" placeholder="150000" min="0">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="location">Location</label>
+                        <select id="location">
+                            <option value="au">Australia</option>
+                            <option value="us">United States</option>
+                            <option value="uk">United Kingdom</option>
+                            <option value="ca">Canada</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="investment-amount">Investment Amount</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="investment-amount" placeholder="50000" min="0">
+                        </div>
+                    </div>
+
+                    <button class="calculate-button" id="calculate-btn">
+                        <i class="fas fa-calculator"></i> Calculate Savings
+                    </button>
                 </div>
-                <div class="floating-card card-3">
-                    <i class="fas fa-coins"></i>
-                    <span>Tax Optimization</span>
+
+                <div class="calculator-results" id="calculator-results">
+                    <div class="results-header">
+                        <h3>Your Potential Savings</h3>
+                    </div>
+                    
+                    <div class="comparison-chart">
+                        <div class="chart-section">
+                            <div class="chart-label">Traditional Setup (Loss)</div>
+                            <div class="chart-bar traditional">
+                                <div class="bar-fill negative" id="traditional-bar"></div>
+                                <div class="bar-value" id="traditional-value">$0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-section">
+                            <div class="chart-label">With Theybuild.io (Gain)</div>
+                            <div class="chart-bar optimized">
+                                <div class="bar-fill positive" id="optimized-bar"></div>
+                                <div class="bar-value" id="optimized-value">$0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cost-breakdown">
+                        <h4>Theybuild.io Cost Breakdown</h4>
+                        <div class="cost-item">
+                            <span class="cost-label">Setup Cost:</span>
+                            <span class="cost-value">$650 (one-time)</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Monthly Subscription:</span>
+                            <span class="cost-value">$20/month</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Annual Cost:</span>
+                            <span class="cost-value">$890</span>
+                        </div>
+                        <div class="cost-item highlight">
+                            <span class="cost-label">Tax Deduction (25%):</span>
+                            <span class="cost-value">-$222.50</span>
+                        </div>
+                        <div class="cost-item total">
+                            <span class="cost-label">Net Annual Cost:</span>
+                            <span class="cost-value">$667.50</span>
+                        </div>
+                    </div>
+
+                    <div class="savings-summary">
+                        <div class="savings-item">
+                            <span class="savings-label">Annual Tax Savings:</span>
+                            <span class="savings-value" id="annual-savings">$0</span>
+                        </div>
+                        <div class="savings-item">
+                            <span class="savings-label">10-Year Savings:</span>
+                            <span class="savings-value" id="decade-savings">$0</span>
+                        </div>
+                        <div class="savings-item total">
+                            <span class="savings-label">Total ROI Improvement:</span>
+                            <span class="savings-value" id="roi-improvement">0%</span>
+                        </div>
+                    </div>
+
+                    <button class="show-flow-button" id="show-flow-btn">
+                        <i class="fas fa-arrow-down"></i> See How This Works With Your Numbers
+                    </button>
                 </div>
             </div>
         </div>
@@ -84,10 +241,10 @@
     <section id="process" class="process-section">
         <div class="container">
             <h2 class="section-title">How Your Money Flows</h2>
-            <p class="section-subtitle">Our automated system optimizes your capital flow for maximum returns and tax efficiency</p>
+            <p class="section-subtitle">Watch your personalized money flow based on your calculations above</p>
             
             <div class="process-animation">
-                <div class="flow-container">
+                <div class="flow-container-improved">
                     <!-- Personal Account -->
                     <div class="flow-node personal" id="personal-node">
                         <div class="node-icon">
@@ -218,116 +375,6 @@
                     </div>
                     <h3>Automated</h3>
                     <p>Set it and forget it - our system handles everything</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Calculator Section -->
-    <section id="calculator" class="calculator-section">
-        <div class="container">
-            <h2 class="section-title">Tax Savings Calculator</h2>
-            <p class="section-subtitle">See how much you could save with our structure</p>
-            
-            <div class="calculator-container">
-                <div class="calculator-inputs">
-                    <div class="input-group">
-                        <label for="annual-income">Annual Income</label>
-                        <div class="input-wrapper">
-                            <span class="input-prefix">$</span>
-                            <input type="number" id="annual-income" placeholder="150000" min="0">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="location">Location</label>
-                        <select id="location">
-                            <option value="au">Australia</option>
-                            <option value="us">United States</option>
-                            <option value="uk">United Kingdom</option>
-                            <option value="ca">Canada</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="investment-amount">Investment Amount</label>
-                        <div class="input-wrapper">
-                            <span class="input-prefix">$</span>
-                            <input type="number" id="investment-amount" placeholder="50000" min="0">
-                        </div>
-                    </div>
-
-                    <button class="calculate-button" id="calculate-btn">
-                        <i class="fas fa-calculator"></i> Calculate Savings
-                    </button>
-                </div>
-
-                <div class="calculator-results" id="calculator-results">
-                    <div class="results-header">
-                        <h3>Your Potential Savings</h3>
-                    </div>
-                    
-                    <div class="comparison-chart">
-                        <div class="chart-section">
-                            <div class="chart-label">Traditional Setup</div>
-                            <div class="chart-bar traditional">
-                                <div class="bar-fill" id="traditional-bar"></div>
-                                <div class="bar-value" id="traditional-value">$0</div>
-                            </div>
-                        </div>
-                        
-                        <div class="chart-section">
-                            <div class="chart-label">With Theybuild.io</div>
-                            <div class="chart-bar optimized">
-                                <div class="bar-fill" id="optimized-bar"></div>
-                                <div class="bar-value" id="optimized-value">$0</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="cost-breakdown">
-                        <h4>Theybuild.io Cost Breakdown</h4>
-                        <div class="cost-item">
-                            <span class="cost-label">Setup Cost:</span>
-                            <span class="cost-value">$650 (one-time)</span>
-                        </div>
-                        <div class="cost-item">
-                            <span class="cost-label">Monthly Subscription:</span>
-                            <span class="cost-value">$20/month</span>
-                        </div>
-                        <div class="cost-item">
-                            <span class="cost-label">Annual Cost:</span>
-                            <span class="cost-value">$890</span>
-                        </div>
-                        <div class="cost-item highlight">
-                            <span class="cost-label">Tax Deduction (25%):</span>
-                            <span class="cost-value">-$222.50</span>
-                        </div>
-                        <div class="cost-item total">
-                            <span class="cost-label">Net Annual Cost:</span>
-                            <span class="cost-value">$667.50</span>
-                        </div>
-                    </div>
-
-                    <div class="savings-summary">
-                        <div class="savings-item">
-                            <span class="savings-label">Annual Tax Savings:</span>
-                            <span class="savings-value" id="annual-savings">$0</span>
-                        </div>
-                        <div class="savings-item">
-                            <span class="savings-label">10-Year Savings:</span>
-                            <span class="savings-value" id="decade-savings">$0</span>
-                        </div>
-                        <div class="savings-item total">
-                            <span class="savings-label">Total ROI Improvement:</span>
-                            <span class="savings-value" id="roi-improvement">0%</span>
-                        </div>
-                    </div>
-
-                    <button class="cta-button-large">
-                        Get Started with These Savings
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
                 </div>
             </div>
         </div>

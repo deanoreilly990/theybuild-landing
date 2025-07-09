@@ -287,36 +287,87 @@ class TaxCalculator {
         // Show results container
         this.resultsContainer.classList.add('active');
         
-        // Update chart bars
-        this.updateChart(results.traditionalTax, results.optimizedTax);
+        // Update chart bars - now showing negative for traditional and positive for Theybuild
+        this.updateChart(results.traditionalTax, results.annualSavings);
         
         // Update values
-        document.getElementById('traditional-value').textContent = `$${results.traditionalTax.toLocaleString()}`;
-        document.getElementById('optimized-value').textContent = `$${results.optimizedTax.toLocaleString()}`;
+        document.getElementById('traditional-value').textContent = `-$${results.traditionalTax.toLocaleString()}`;
+        document.getElementById('optimized-value').textContent = `+$${Math.abs(results.annualSavings).toLocaleString()}`;
         document.getElementById('annual-savings').textContent = `$${results.annualSavings.toLocaleString()}`;
         document.getElementById('decade-savings').textContent = `$${results.decadeSavings.toLocaleString()}`;
         document.getElementById('roi-improvement').textContent = `${results.roiImprovement.toFixed(1)}%`;
         
         // Animate the results
         this.animateResults();
+        
+        // Set up show flow button
+        const showFlowBtn = document.getElementById('show-flow-btn');
+        if (showFlowBtn) {
+            showFlowBtn.onclick = () => {
+                this.scrollToProcess();
+                this.updateProcessWithUserData(results);
+            };
+        }
     }
 
-    updateChart(traditionalTax, optimizedTax) {
-        const maxValue = Math.max(traditionalTax, optimizedTax);
-        const traditionalPercentage = (traditionalTax / maxValue) * 100;
-        const optimizedPercentage = (optimizedTax / maxValue) * 100;
+    updateChart(traditionalLoss, theybuildGain) {
+        const maxValue = Math.max(Math.abs(traditionalLoss), Math.abs(theybuildGain));
+        const traditionalPercentage = (Math.abs(traditionalLoss) / maxValue) * 45; // Max 45% of container
+        const theybuildPercentage = (Math.abs(theybuildGain) / maxValue) * 45; // Max 45% of container
         
         const traditionalBar = document.getElementById('traditional-bar');
         const optimizedBar = document.getElementById('optimized-bar');
         
-        // Animate bars
+        // Reset bars
+        traditionalBar.style.width = '0%';
+        optimizedBar.style.width = '0%';
+        
+        // Animate traditional bar (negative - grows left from center)
         setTimeout(() => {
             traditionalBar.style.width = `${traditionalPercentage}%`;
         }, 200);
         
+        // Animate Theybuild bar (positive - grows right from center)
         setTimeout(() => {
-            optimizedBar.style.width = `${optimizedPercentage}%`;
+            optimizedBar.style.width = `${theybuildPercentage}%`;
         }, 600);
+    }
+
+    scrollToProcess() {
+        const processSection = document.getElementById('process');
+        if (processSection) {
+            processSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+
+    updateProcessWithUserData(results) {
+        // Store results for the process animation to use
+        window.userCalculationResults = results;
+        
+        // Update the personal amount in the process section
+        const personalAmount = document.getElementById('personal-amount');
+        const investmentAmount = parseFloat(document.getElementById('investment-amount').value) || 100000;
+        
+        if (personalAmount) {
+            personalAmount.textContent = `$${investmentAmount.toLocaleString()}`;
+        }
+        
+        // Trigger a visual indication that this is their personalized flow
+        const processSection = document.querySelector('.process-section');
+        if (processSection) {
+            processSection.style.background = 'linear-gradient(135deg, rgba(199, 243, 255, 0.1) 0%, rgba(250, 254, 255, 1) 100%)';
+            
+            // Add a personalized message
+            const subtitle = processSection.querySelector('.section-subtitle');
+            if (subtitle) {
+                subtitle.innerHTML = `Watch your personalized money flow with $${investmentAmount.toLocaleString()} investment and $${Math.abs(results.annualSavings).toLocaleString()} annual savings`;
+                subtitle.style.color = 'var(--secondary-cyan)';
+                subtitle.style.fontWeight = '600';
+            }
+        }
     }
 
     animateResults() {
@@ -391,8 +442,117 @@ window.addEventListener('scroll', () => {
     });
 });
 
+// Initialize Particles.js
+function initParticles() {
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: ['#c7f3ff', '#94e8ff', '#111111']
+            },
+            shape: {
+                type: 'circle',
+                stroke: {
+                    width: 0,
+                    color: '#000000'
+                }
+            },
+            opacity: {
+                value: 0.3,
+                random: false,
+                anim: {
+                    enable: false,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false
+                }
+            },
+            size: {
+                value: 3,
+                random: true,
+                anim: {
+                    enable: false,
+                    speed: 40,
+                    size_min: 0.1,
+                    sync: false
+                }
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: '#94e8ff',
+                opacity: 0.2,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: 'none',
+                random: false,
+                straight: false,
+                out_mode: 'out',
+                bounce: false,
+                attract: {
+                    enable: false,
+                    rotateX: 600,
+                    rotateY: 1200
+                }
+            }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: 'repulse'
+                },
+                onclick: {
+                    enable: true,
+                    mode: 'push'
+                },
+                resize: true
+            },
+            modes: {
+                grab: {
+                    distance: 400,
+                    line_linked: {
+                        opacity: 1
+                    }
+                },
+                bubble: {
+                    distance: 400,
+                    size: 40,
+                    duration: 2,
+                    opacity: 8,
+                    speed: 3
+                },
+                repulse: {
+                    distance: 200,
+                    duration: 0.4
+                },
+                push: {
+                    particles_nb: 4
+                },
+                remove: {
+                    particles_nb: 2
+                }
+            }
+        },
+        retina_detect: true
+    });
+}
+
 // Initialize components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize particles
+    initParticles();
+    
     new MoneyFlowAnimation();
     new TaxCalculator();
     

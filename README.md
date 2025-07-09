@@ -1,8 +1,19 @@
-# Theybuild.io Landing Page - Version 0.2
+# Theybuild.io Landing Page - Version 0.3
 
 A professional, animated landing page for Theybuild.io - an investment capital automation platform that helps individuals maximize their wealth through trust and company structures.
 
-## Version 0.2 Updates
+## Version 0.3 Updates
+
+- **Particles.js Background**: Added animated particle background with brand colors and center white fade
+- **Fixed Hero Title**: Resolved visual error with gradient text line breaks
+- **New Hero Animation**: Replaced floating cards with interactive money flow visualization showing You → Trust → Company
+- **Reordered Sections**: Calculator now comes first - users input their data then see personalized flow
+- **Enhanced Process Section**: Improved spacing and made descriptions more interactive around the flow
+- **Negative/Positive Chart**: Traditional setup now shows as negative loss, Theybuild shows as positive gain above/below $0 line
+- **Personalized Flow**: After calculation, users can see their exact numbers in the process animation
+- **Show Flow Button**: Smooth scroll from calculator results to personalized process visualization
+
+## Previous Version 0.2 Updates
 
 - **Updated Money Flow**: Personal → Trust → Company → (returns) → Company → Trust → Family & Trust → Personal
 - **Step-by-step Animation**: Added visual step descriptions that highlight during animation
