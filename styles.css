@@ -896,6 +896,38 @@ body {
     box-shadow: 0 0 0 3px rgba(148, 232, 255, 0.1);
 }
 
+.tax-display {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(148, 232, 255, 0.1);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(148, 232, 255, 0.3);
+}
+
+.tax-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tax-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tax-label {
+    font-weight: 500;
+    color: var(--dark);
+    font-size: 0.9rem;
+}
+
+.tax-value {
+    font-weight: 600;
+    color: var(--secondary-cyan);
+    font-size: 0.9rem;
+}
+
 select {
     width: 100%;
     padding: 1rem;
@@ -1022,7 +1054,7 @@ select:focus {
 }
 
 .chart-bar.traditional {
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 .chart-bar.optimized {
@@ -1042,12 +1074,10 @@ select:focus {
 
 .bar-fill.negative {
     background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
-    margin-right: 50%;
 }
 
 .bar-fill.positive {
-    background: var(--gradient);
-    margin-left: 50%;
+    background: linear-gradient(90deg, #94e8ff, #c7f3ff);
 }
 
 .bar-value {

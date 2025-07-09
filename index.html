@@ -154,6 +154,9 @@
                             <span class="input-prefix">$</span>
                             <input type="text" id="annual-income" placeholder="150,000" inputmode="numeric">
                         </div>
+                        <div id="tax-display" class="tax-display" style="display: none;">
+                            <!-- Tax information will be populated by JavaScript -->
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -186,7 +189,7 @@
                     
                     <div class="comparison-chart">
                         <div class="chart-section">
-                            <div class="chart-label">Traditional Setup (Loss)</div>
+                            <div class="chart-label">Traditional Investment Tax (Personal Rate)</div>
                             <div class="chart-bar traditional">
                                 <div class="bar-fill negative" id="traditional-bar"></div>
                                 <div class="bar-value" id="traditional-value">$0</div>
@@ -194,7 +197,7 @@
                         </div>
                         
                         <div class="chart-section">
-                            <div class="chart-label">With Theybuild.io (Gain)</div>
+                            <div class="chart-label">Theybuild.io Investment Tax (Company Rate)</div>
                             <div class="chart-bar optimized">
                                 <div class="bar-fill positive" id="optimized-bar"></div>
                                 <div class="bar-value" id="optimized-value">$0</div>
@@ -234,15 +237,15 @@
 
                     <div class="savings-summary">
                         <div class="savings-item">
-                            <span class="savings-label">1-Year Tax Savings (20% Growth):</span>
+                            <span class="savings-label">1-Year Tax Savings (40% Growth):</span>
                             <span class="savings-value" id="year-1-savings">$0</span>
                         </div>
                         <div class="savings-item">
-                            <span class="savings-label">3-Year Tax Savings (20% Growth):</span>
+                            <span class="savings-label">3-Year Tax Savings (40% Growth):</span>
                             <span class="savings-value" id="year-3-savings">$0</span>
                         </div>
                         <div class="savings-item">
-                            <span class="savings-label">5-Year Tax Savings (20% Growth):</span>
+                            <span class="savings-label">5-Year Tax Savings (40% Growth):</span>
                             <span class="savings-value" id="year-5-savings">$0</span>
                         </div>
                         <div class="savings-item total">

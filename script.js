@@ -227,11 +227,22 @@ class TaxCalculator {
         // Auto-calculate when inputs change
         [this.annualIncomeInput, this.locationSelect, this.investmentAmountInput].forEach(input => {
             input.addEventListener('change', () => {
+                this.updateTaxDisplay();
                 if (this.annualIncomeInput.value && this.investmentAmountInput.value) {
                     this.calculateSavings();
                 }
             });
         });
+
+        // Update tax display when income changes
+        this.annualIncomeInput.addEventListener('input', () => {
+            this.updateTaxDisplay();
+        });
+
+        // Initialize tax display
+        setTimeout(() => {
+            this.updateTaxDisplay();
+        }, 100);
     }
 
     setupNumberFormatting() {
@@ -252,6 +263,43 @@ class TaxCalculator {
                 }
             });
         });
+    }
+
+    updateTaxDisplay() {
+        const income = parseFloat(this.annualIncomeInput.value.replace(/,/g, '')) || 0;
+        
+        if (income > 0) {
+            const annualTax = this.calculateAustralianTax(income);
+            const marginalRate = this.getPersonalMarginalTaxRate(income);
+            const afterTaxIncome = income - annualTax;
+            
+            // Update tax display elements if they exist
+            const taxDisplay = document.getElementById('tax-display');
+            if (taxDisplay) {
+                taxDisplay.innerHTML = `
+                    <div class="tax-info">
+                        <div class="tax-item">
+                            <span class="tax-label">Annual Income Tax:</span>
+                            <span class="tax-value">$${annualTax.toLocaleString()}</span>
+                        </div>
+                        <div class="tax-item">
+                            <span class="tax-label">Marginal Tax Rate:</span>
+                            <span class="tax-value">${(marginalRate * 100).toFixed(1)}%</span>
+                        </div>
+                        <div class="tax-item">
+                            <span class="tax-label">After Tax Income:</span>
+                            <span class="tax-value">$${afterTaxIncome.toLocaleString()}</span>
+                        </div>
+                    </div>
+                `;
+                taxDisplay.style.display = 'block';
+            }
+        } else {
+            const taxDisplay = document.getElementById('tax-display');
+            if (taxDisplay) {
+                taxDisplay.style.display = 'none';
+            }
+        }
     }
 
     calculateAustralianTax(income) {
@@ -282,7 +330,7 @@ class TaxCalculator {
     }
 
     calculateInvestmentTaxScenarios(annualIncome, investmentAmount) {
-        const growthRate = 0.20; // 20% annual growth
+        const growthRate = 0.40; // 40% annual growth
         const netTheybuildCost = this.annualTheybuildCost - (this.annualTheybuildCost * this.companyTaxRate);
         
         // Get personal marginal tax rate based on income
@@ -361,12 +409,12 @@ class TaxCalculator {
         // Show results container
         this.resultsContainer.classList.add('active');
         
-        // Progressive chart loading - first show loss, then gain
-        this.updateChartProgressive(results.traditionalTax, results.annualSavings);
+        // Progressive chart loading - show both tax amounts
+        this.updateChartProgressive(results.traditionalTax, results.optimizedTax);
         
-        // Update values
-        document.getElementById('traditional-value').textContent = `-$${results.traditionalTax.toLocaleString()}`;
-        document.getElementById('optimized-value').textContent = `+$${Math.abs(results.annualSavings).toLocaleString()}`;
+        // Update values to show actual tax amounts
+        document.getElementById('traditional-value').textContent = `$${results.traditionalTax.toLocaleString()}`;
+        document.getElementById('optimized-value').textContent = `$${results.optimizedTax.toLocaleString()}`;
         document.getElementById('year-1-savings').textContent = `$${results.year1Savings.toLocaleString()}`;
         document.getElementById('year-3-savings').textContent = `$${results.year3Savings.toLocaleString()}`;
         document.getElementById('year-5-savings').textContent = `$${results.year5Savings.toLocaleString()}`;
@@ -390,10 +438,10 @@ class TaxCalculator {
         }
     }
 
-    updateChartProgressive(traditionalLoss, theybuildGain) {
-        const maxValue = Math.max(Math.abs(traditionalLoss), Math.abs(theybuildGain));
-        const traditionalPercentage = (Math.abs(traditionalLoss) / maxValue) * 45; // Max 45% of container
-        const theybuildPercentage = (Math.abs(theybuildGain) / maxValue) * 45; // Max 45% of container
+    updateChartProgressive(traditionalTax, theybuildTax) {
+        const maxValue = Math.max(traditionalTax, theybuildTax);
+        const traditionalPercentage = (traditionalTax / maxValue) * 80; // Max 80% of container
+        const theybuildPercentage = (theybuildTax / maxValue) * 80; // Max 80% of container
         
         const traditionalBar = document.getElementById('traditional-bar');
         const optimizedBar = document.getElementById('optimized-bar');
@@ -402,13 +450,13 @@ class TaxCalculator {
         traditionalBar.style.width = '0%';
         optimizedBar.style.width = '0%';
         
-        // First show traditional loss with dramatic effect
+        // Show traditional tax (higher amount)
         setTimeout(() => {
             traditionalBar.style.width = `${traditionalPercentage}%`;
             traditionalBar.style.animation = 'shake 0.5s ease-in-out';
         }, 300);
         
-        // Then show Theybuild gain with positive effect
+        // Show Theybuild tax (lower amount)
         setTimeout(() => {
             optimizedBar.style.width = `${theybuildPercentage}%`;
             optimizedBar.style.animation = 'popIn 0.6s ease-out';
