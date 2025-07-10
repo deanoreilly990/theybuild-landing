@@ -279,40 +279,42 @@ body {
 
 .hero-visual {
     position: relative;
-    height: 500px;
+    height: 450px;
     animation: fadeInUp 1s ease-out 0.8s both;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .hero-animation-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1.2rem;
     width: 100%;
-    max-width: 500px;
+    max-width: 420px;
+    transform: scale(0.9);
 }
 
 .hero-scenario-title {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--dark);
     text-align: center;
-    margin-bottom: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: rgba(250, 254, 255, 0.9);
+    margin-bottom: 0.3rem;
+    padding: 0.5rem 1rem;
+    background: rgba(250, 254, 255, 0.95);
     border-radius: var(--border-radius);
     border: 2px solid var(--secondary-cyan);
     transition: all 0.5s ease;
 }
 
 .hero-subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-align: center;
     color: rgba(17, 17, 17, 0.7);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: 500;
 }
 
@@ -522,55 +524,55 @@ body {
 .income-source {
     display: flex;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 1rem 0;
 }
 
 .income-tile {
     background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--secondary-cyan) 100%);
     border-radius: var(--border-radius);
-    padding: 1.5rem;
+    padding: 1rem;
     text-align: center;
-    box-shadow: var(--shadow-large);
-    border: 3px solid var(--secondary-cyan);
-    min-width: 180px;
+    box-shadow: var(--shadow);
+    border: 2px solid var(--secondary-cyan);
+    min-width: 140px;
     transition: all 0.6s ease;
     animation: float 3s ease-in-out infinite;
 }
 
 .income-icon {
-    background: rgba(255, 255, 255, 0.9);
-    width: 60px;
-    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem;
+    margin: 0 auto 0.75rem;
 }
 
 .income-icon i {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: var(--dark);
 }
 
 .income-label {
     font-weight: 600;
     color: var(--dark);
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
 }
 
 .income-amount {
     font-weight: 800;
     color: var(--dark);
-    font-size: 1.4rem;
+    font-size: 1.1rem;
 }
 
 /* Tax Flow Container */
 .tax-flow-container {
     position: relative;
-    height: 120px;
-    margin: 2rem 0;
+    height: 80px;
+    margin: 1rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -591,11 +593,11 @@ body {
 }
 
 .arrow-line {
-    height: 4px;
-    width: 150px;
+    height: 3px;
+    width: 120px;
     border-radius: 2px;
     position: relative;
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
 .red-arrow {
@@ -621,36 +623,36 @@ body {
 .arrow-head {
     width: 0;
     height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
 }
 
 .red-head {
-    border-left: 12px solid #ff4757;
+    border-left: 10px solid #ff4757;
 }
 
 .green-head {
-    border-left: 12px solid #2ed573;
+    border-left: 10px solid #2ed573;
 }
 
 .blue-head {
-    border-left: 12px solid var(--primary-cyan);
+    border-left: 10px solid var(--secondary-cyan);
 }
 
 .purple-head {
-    border-left: 12px solid #8e44ad;
+    border-left: 10px solid #8e44ad;
 }
 
 .arrow-label {
     position: absolute;
-    top: -35px;
+    top: -30px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--dark);
     color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
     font-weight: 600;
     white-space: nowrap;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -686,11 +688,11 @@ body {
 /* Outcome Grid */
 .outcome-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1.5rem;
-    margin: 3rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
     justify-items: center;
-    max-width: 800px;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -698,11 +700,11 @@ body {
 .outcome-tile {
     background: rgba(255, 255, 255, 0.95);
     border-radius: var(--border-radius);
-    padding: 1.5rem 1rem;
+    padding: 1rem 0.75rem;
     text-align: center;
-    min-width: 140px;
+    min-width: 110px;
     box-shadow: var(--shadow);
-    border: 3px solid transparent;
+    border: 2px solid transparent;
     opacity: 0;
     transform: scale(0.8);
     transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -720,13 +722,13 @@ body {
 }
 
 .tile-icon {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem;
+    margin: 0 auto 0.75rem;
 }
 
 .red-icon {
@@ -741,16 +743,16 @@ body {
 
 .blue-icon {
     background: linear-gradient(135deg, var(--primary-cyan), var(--secondary-cyan));
-    border: 2px solid var(--primary-cyan);
+    border: 2px solid var(--secondary-cyan);
 }
 
 .purple-icon {
-    background: linear-gradient(135deg, #7c4dff, #9c88ff);
-    border: 2px solid #7c4dff;
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    border: 2px solid #8e44ad;
 }
 
 .tile-icon i {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: white;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -758,13 +760,13 @@ body {
 .tile-label {
     font-weight: 600;
     color: var(--dark);
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
 }
 
 .tile-amount {
     font-weight: 800;
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: var(--dark);
     transition: all 0.3s ease;
 }
@@ -808,25 +810,25 @@ body {
 .popup-content {
     background: white;
     border-radius: var(--border-radius);
-    padding: 2.5rem;
-    max-width: 600px;
+    padding: 1.5rem;
+    max-width: 450px;
     width: 90%;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    transform: scale(0.9);
+    transform: scale(0.85);
     transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .comparison-popup.active .popup-content {
-    transform: scale(1);
+    transform: scale(0.95);
 }
 
 .popup-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
 }
 
 .popup-header h3 {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: var(--dark);
     margin: 0;
@@ -834,20 +836,20 @@ body {
 
 .comparison-grid {
     display: grid;
-    gap: 2rem;
+    gap: 1.2rem;
 }
 
 .setup-comparison {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    gap: 2rem;
+    gap: 1.2rem;
     align-items: center;
 }
 
 .setup-card {
     background: rgba(250, 254, 255, 0.5);
     border-radius: var(--border-radius);
-    padding: 1.5rem;
+    padding: 1rem;
     border: 2px solid transparent;
     transition: all 0.3s ease;
 }
@@ -862,15 +864,15 @@ body {
 
 .setup-title {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: var(--dark);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     text-align: center;
 }
 
 .setup-details {
     display: grid;
-    gap: 0.8rem;
+    gap: 0.6rem;
 }
 
 .setup-item {
@@ -882,22 +884,23 @@ body {
 .setup-item .label {
     font-weight: 500;
     color: rgba(17, 17, 17, 0.7);
+    font-size: 0.85rem;
 }
 
 .setup-item .value {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: var(--dark);
 }
 
 .vs-separator {
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--dark);
     text-align: center;
     background: var(--gradient);
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -909,21 +912,21 @@ body {
 .savings-callout {
     background: linear-gradient(135deg, #27ae60, #2ed573);
     color: white;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: var(--border-radius);
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     box-shadow: 0 4px 20px rgba(39, 174, 96, 0.3);
 }
 
 .savings-text {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
 .savings-amount {
     font-weight: 800;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .summary-card {
