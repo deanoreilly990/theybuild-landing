@@ -287,14 +287,217 @@ body {
     overflow: hidden;
 }
 
-.hero-animation-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
+.savings-comparison-container {
+    background: rgba(250, 254, 255, 0.95);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-large);
+    border: 2px solid var(--secondary-cyan);
     width: 100%;
-    max-width: 420px;
-    transform: scale(0.9);
+    max-width: 600px;
+}
+
+.comparison-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.comparison-header h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.comparison-header p {
+    color: rgba(17, 17, 17, 0.7);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.comparison-table {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
+.comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.comparison-table th {
+    background: var(--gradient);
+    color: var(--dark);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--secondary-cyan);
+}
+
+.comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(148, 232, 255, 0.3);
+    font-weight: 500;
+}
+
+.scenario-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.scenario-label i {
+    color: var(--secondary-cyan);
+    width: 16px;
+}
+
+.negative {
+    color: #ff4757;
+    font-weight: 700;
+}
+
+.positive {
+    color: #27ae60;
+    font-weight: 700;
+}
+
+.savings {
+    color: #27ae60;
+    font-weight: 800;
+    background: rgba(39, 174, 96, 0.1);
+    padding: 0.5rem;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.structure-breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.structure-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.personal-structure {
+    border-color: #ff4757;
+}
+
+.theybuild-structure {
+    border-color: #27ae60;
+}
+
+.structure-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.structure-header i {
+    font-size: 1.2rem;
+    width: 20px;
+}
+
+.personal-structure .structure-header i {
+    color: #ff4757;
+}
+
+.theybuild-structure .structure-header i {
+    color: #27ae60;
+}
+
+.structure-header h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 0;
+}
+
+.structure-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.structure-details li {
+    padding: 0.5rem 0;
+    color: rgba(17, 17, 17, 0.8);
+    border-bottom: 1px solid rgba(148, 232, 255, 0.2);
+}
+
+.structure-details li:last-child {
+    border-bottom: none;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.benefits-summary {
+    background: rgba(148, 232, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    border: 1px solid var(--secondary-cyan);
+}
+
+.benefits-summary h4 {
+    color: var(--dark);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(17, 17, 17, 0.05);
+    transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.benefit-item i {
+    color: var(--secondary-cyan);
+    font-size: 1.1rem;
+    width: 18px;
+    flex-shrink: 0;
+}
+
+.benefit-item span {
+    font-size: 0.9rem;
+    color: var(--dark);
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 .hero-scenario-title {
@@ -2274,8 +2477,32 @@ select:focus {
         padding: 1.5rem;
     }
 
-    .hero-animation-container {
-        gap: 1.5rem;
+    .savings-comparison-container {
+        padding: 1.5rem;
+        max-width: 100%;
+    }
+
+    .comparison-header h3 {
+        font-size: 1.4rem;
+    }
+
+    .comparison-table {
+        font-size: 0.9rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .structure-breakdown {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
     }
 
     .hero-grid {
@@ -2354,9 +2581,45 @@ select:focus {
         padding: 1rem;
     }
 
-    .hero-animation-container {
-        gap: 1rem;
-        max-width: 350px;
+    .savings-comparison-container {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    .comparison-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .comparison-header p {
+        font-size: 0.9rem;
+    }
+
+    .comparison-table {
+        font-size: 0.8rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .scenario-label {
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+    }
+
+    .structure-card {
+        padding: 1rem;
+    }
+
+    .structure-header {
+        justify-content: center;
+    }
+
+    .benefit-item {
+        padding: 0.5rem;
+        font-size: 0.8rem;
     }
 
     .hero-grid {

@@ -67,172 +67,111 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="hero-animation-container">
-                    <div class="hero-scenario-title" id="scenario-title">Step 1: Your Salary</div>
-                    <div class="hero-subtitle" id="scenario-subtitle">$150,000 salary - see what happens to your money</div>
-                    
-                    <!-- Income Source -->
-                    <div class="income-source" id="income-source">
-                        <div class="income-tile">
-                            <div class="income-icon">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                            <div class="income-label">Your Salary</div>
-                            <div class="income-amount">$150,000</div>
-                        </div>
+                <div class="savings-comparison-container">
+                    <div class="comparison-header">
+                        <h3>Tax Optimization Comparison</h3>
+                        <p>$150K Salary + $100K Investment (30% Growth)</p>
                     </div>
                     
-                    <!-- Investment Source (hidden initially) -->
-                    <div class="income-source" id="investment-source" style="display: none; margin-top: 2rem;">
-                        <div class="income-tile">
-                            <div class="income-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="income-label">Investment Profit</div>
-                            <div class="income-amount">$30,000</div>
-                        </div>
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Scenario</th>
+                                    <th>Personal Setup</th>
+                                    <th>TheyBuild Structure</th>
+                                    <th>Savings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="income-row">
+                                    <td class="scenario-label">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        Total Income
+                                    </td>
+                                    <td>$180,000</td>
+                                    <td>$180,000</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr class="tax-row">
+                                    <td class="scenario-label">
+                                        <i class="fas fa-receipt"></i>
+                                        Tax Paid
+                                    </td>
+                                    <td class="negative">$53,338</td>
+                                    <td class="negative">$47,338</td>
+                                    <td class="savings">$6,000</td>
+                                </tr>
+                                <tr class="net-row">
+                                    <td class="scenario-label">
+                                        <i class="fas fa-piggy-bank"></i>
+                                        After Tax
+                                    </td>
+                                    <td>$126,662</td>
+                                    <td class="positive">$132,662</td>
+                                    <td class="savings">+$6,000</td>
+                                </tr>
+                                <tr class="breakdown-row">
+                                    <td class="scenario-label">
+                                        <i class="fas fa-chart-line"></i>
+                                        Tax Rate
+                                    </td>
+                                    <td>29.6%</td>
+                                    <td class="positive">26.3%</td>
+                                    <td class="savings">-3.3%</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    
-                    <!-- Flow Animation Container -->
-                    <div class="tax-flow-container">
-                        <!-- Tax Flow Arrows -->
-                        <div class="flow-arrow tax-arrow" id="tax-arrow">
-                            <div class="arrow-line red-arrow"></div>
-                            <div class="arrow-head red-head"></div>
-                            <div class="arrow-label" id="tax-arrow-label">Tax</div>
-                        </div>
-                        
-                        <div class="flow-arrow savings-arrow" id="savings-arrow">
-                            <div class="arrow-line green-arrow"></div>
-                            <div class="arrow-head green-head"></div>
-                            <div class="arrow-label" id="savings-arrow-label">Remaining</div>
-                        </div>
-                        
-                        <!-- Additional Company Flow Arrows (hidden initially) -->
-                        <div class="flow-arrow company-tax-arrow" id="company-tax-arrow" style="display: none;">
-                            <div class="arrow-line red-arrow"></div>
-                            <div class="arrow-head red-head"></div>
-                            <div class="arrow-label">25% Company Tax</div>
-                        </div>
-                        
-                        <div class="flow-arrow trust-arrow" id="trust-arrow" style="display: none;">
-                            <div class="arrow-line purple-arrow"></div>
-                            <div class="arrow-head purple-head"></div>
-                            <div class="arrow-label">To Trust</div>
-                        </div>
-                        
-                        <div class="flow-arrow distribution-arrow" id="distribution-arrow" style="display: none;">
-                            <div class="arrow-line purple-arrow"></div>
-                            <div class="arrow-head purple-head"></div>
-                            <div class="arrow-label">Tax-Free Distribution</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Outcome Tiles -->
-                    <div class="outcome-grid" id="outcome-grid">
-                        <div class="outcome-tile taxman-tile" id="taxman-tile">
-                            <div class="tile-icon red-icon">
-                                <i class="fas fa-receipt"></i>
-                            </div>
-                            <div class="tile-label">Taxman</div>
-                            <div class="tile-amount" id="taxman-amount">$0</div>
-                        </div>
-                        
-                        <div class="outcome-tile you-tile" id="you-tile">
-                            <div class="tile-icon green-icon">
+
+                    <div class="structure-breakdown">
+                        <div class="structure-card personal-structure">
+                            <div class="structure-header">
                                 <i class="fas fa-user"></i>
+                                <h4>Personal Setup</h4>
                             </div>
-                            <div class="tile-label">You</div>
-                            <div class="tile-amount" id="you-amount">$0</div>
+                            <ul class="structure-details">
+                                <li>$150K salary → 30% tax = $39,838</li>
+                                <li>$30K investment profit → 45% tax = $13,500</li>
+                                <li>Total tax: $53,338</li>
+                                <li>Money kept: $126,662</li>
+                            </ul>
                         </div>
-                        
-                        <!-- Company Structure Tiles (hidden initially) -->
-                        <div class="outcome-tile company-tile" id="company-tile" style="display: none;">
-                            <div class="tile-icon blue-icon">
+
+                        <div class="structure-card theybuild-structure">
+                            <div class="structure-header">
                                 <i class="fas fa-building"></i>
+                                <h4>TheyBuild Structure</h4>
                             </div>
-                            <div class="tile-label">Company</div>
-                            <div class="tile-amount" id="company-amount">$0</div>
-                        </div>
-                        
-                        <div class="outcome-tile trust-tile" id="trust-tile" style="display: none;">
-                            <div class="tile-icon purple-icon">
-                                <i class="fas fa-umbrella"></i>
-                            </div>
-                            <div class="tile-label">Trust</div>
-                            <div class="tile-amount" id="trust-amount">$0</div>
-                        </div>
-                        
-                        <div class="outcome-tile family-tile" id="family-tile-1" style="display: none;">
-                            <div class="tile-icon purple-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="tile-label">Family 1</div>
-                            <div class="tile-amount" id="family-amount-1">$0</div>
-                        </div>
-                        
-                        <div class="outcome-tile family-tile" id="family-tile-2" style="display: none;">
-                            <div class="tile-icon purple-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="tile-label">Family 2</div>
-                            <div class="tile-amount" id="family-amount-2">$0</div>
+                            <ul class="structure-details">
+                                <li>$150K salary → 30% tax = $39,838</li>
+                                <li>$30K investment → 25% company tax = $7,500</li>
+                                <li>Total tax: $47,338</li>
+                                <li>Money kept: $132,662</li>
+                            </ul>
                         </div>
                     </div>
-                    
-                    <!-- Final Comparison Popup -->
-                    <div class="comparison-popup" id="comparison-popup" style="display: none;">
-                        <div class="popup-content">
-                            <div class="popup-header">
-                                <h3>💸 You saved money using Theybuild.io!</h3>
+
+                    <div class="benefits-summary">
+                        <h4>Key Benefits of TheyBuild Structure</h4>
+                        <div class="benefits-grid">
+                            <div class="benefit-item">
+                                <i class="fas fa-percentage"></i>
+                                <span>Lower tax rate on investments (25% vs 45%)</span>
                             </div>
-                            <div class="comparison-grid">
-                                <div class="setup-comparison">
-                                    <div class="setup-card personal-setup">
-                                        <div class="setup-title">Personal Setup</div>
-                                        <div class="setup-details">
-                                            <div class="setup-item">
-                                                <span class="label">Total Tax:</span>
-                                                <span class="value red-text" id="personal-tax">$53,338</span>
-                                            </div>
-                                            <div class="setup-item">
-                                                <span class="label">You Keep:</span>
-                                                <span class="value" id="personal-kept">$126,662</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="vs-separator">VS</div>
-                                    
-                                    <div class="setup-card theybuild-setup">
-                                        <div class="setup-title">Company + Trust</div>
-                                        <div class="setup-details">
-                                            <div class="setup-item">
-                                                <span class="label">Total Tax:</span>
-                                                <span class="value red-text" id="theybuild-tax">$47,338</span>
-                                            </div>
-                                            <div class="setup-item">
-                                                <span class="label">You Keep:</span>
-                                                <span class="value green-text" id="theybuild-kept">$132,662</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="savings-callout">
-                                    <div class="savings-text">💸 You saved <span class="savings-amount" id="total-savings-popup">$6,000</span> using Theybuild.io</div>
-                                </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-family"></i>
+                                <span>Tax-free income distribution to family</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Asset protection through trust structure</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-chart-growth"></i>
+                                <span>Compound tax savings over time</span>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="hero-controls">
-                        <button class="hero-play-btn" id="hero-play-btn">
-                            <i class="fas fa-play"></i> Watch Story
-                        </button>
-                        <button class="hero-reset-btn" id="hero-reset-btn">
-                            <i class="fas fa-refresh"></i> Replay
-                        </button>
                     </div>
                 </div>
             </div>
