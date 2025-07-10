@@ -68,17 +68,28 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-animation-container">
-                    <div class="hero-scenario-title" id="scenario-title">Step 1: Sole Trader</div>
-                    <div class="hero-subtitle" id="scenario-subtitle">$250,000 income - see what happens to your money</div>
+                    <div class="hero-scenario-title" id="scenario-title">Step 1: Your Salary</div>
+                    <div class="hero-subtitle" id="scenario-subtitle">$150,000 salary - see what happens to your money</div>
                     
                     <!-- Income Source -->
                     <div class="income-source" id="income-source">
                         <div class="income-tile">
                             <div class="income-icon">
-                                <i class="fas fa-wallet"></i>
+                                <i class="fas fa-dollar-sign"></i>
                             </div>
-                            <div class="income-label">Your Income</div>
-                            <div class="income-amount">$250,000</div>
+                            <div class="income-label">Your Salary</div>
+                            <div class="income-amount">$150,000</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Investment Source (hidden initially) -->
+                    <div class="income-source" id="investment-source" style="display: none; margin-top: 2rem;">
+                        <div class="income-tile">
+                            <div class="income-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="income-label">Investment Profit</div>
+                            <div class="income-amount">$30,000</div>
                         </div>
                     </div>
                     
@@ -152,31 +163,66 @@
                             <div class="tile-amount" id="trust-amount">$0</div>
                         </div>
                         
-                        <div class="outcome-tile family-tile" id="family-tile" style="display: none;">
-                            <div class="tile-icon green-icon">
-                                <i class="fas fa-users"></i>
+                        <div class="outcome-tile family-tile" id="family-tile-1" style="display: none;">
+                            <div class="tile-icon purple-icon">
+                                <i class="fas fa-user"></i>
                             </div>
-                            <div class="tile-label">Family</div>
-                            <div class="tile-amount" id="family-amount">$0</div>
+                            <div class="tile-label">Family 1</div>
+                            <div class="tile-amount" id="family-amount-1">$0</div>
+                        </div>
+                        
+                        <div class="outcome-tile family-tile" id="family-tile-2" style="display: none;">
+                            <div class="tile-icon purple-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="tile-label">Family 2</div>
+                            <div class="tile-amount" id="family-amount-2">$0</div>
                         </div>
                     </div>
                     
-                    <!-- Comparison Summary -->
-                    <div class="comparison-summary" id="comparison-summary" style="display: none;">
-                        <div class="summary-card traditional-card">
-                            <div class="summary-title">Traditional (Personal)</div>
-                            <div class="summary-amount red-text" id="traditional-summary">$110,000</div>
-                            <div class="summary-label">After Tax</div>
-                        </div>
-                        <div class="vs-divider">VS</div>
-                        <div class="summary-card optimized-card">
-                            <div class="summary-title">TheyBuild Structure</div>
-                            <div class="summary-amount green-text" id="optimized-summary">$0</div>
-                            <div class="summary-label">After Tax + Distributions</div>
-                        </div>
-                        <div class="savings-highlight" id="savings-highlight">
-                            <div class="savings-amount" id="total-savings">+$0</div>
-                            <div class="savings-label">Additional Money Kept</div>
+                    <!-- Final Comparison Popup -->
+                    <div class="comparison-popup" id="comparison-popup" style="display: none;">
+                        <div class="popup-content">
+                            <div class="popup-header">
+                                <h3>💸 You saved money using Theybuild.io!</h3>
+                            </div>
+                            <div class="comparison-grid">
+                                <div class="setup-comparison">
+                                    <div class="setup-card personal-setup">
+                                        <div class="setup-title">Personal Setup</div>
+                                        <div class="setup-details">
+                                            <div class="setup-item">
+                                                <span class="label">Total Tax:</span>
+                                                <span class="value red-text" id="personal-tax">$53,338</span>
+                                            </div>
+                                            <div class="setup-item">
+                                                <span class="label">You Keep:</span>
+                                                <span class="value" id="personal-kept">$126,662</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="vs-separator">VS</div>
+                                    
+                                    <div class="setup-card theybuild-setup">
+                                        <div class="setup-title">Company + Trust</div>
+                                        <div class="setup-details">
+                                            <div class="setup-item">
+                                                <span class="label">Total Tax:</span>
+                                                <span class="value red-text" id="theybuild-tax">$47,338</span>
+                                            </div>
+                                            <div class="setup-item">
+                                                <span class="label">You Keep:</span>
+                                                <span class="value green-text" id="theybuild-kept">$132,662</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="savings-callout">
+                                    <div class="savings-text">💸 You saved <span class="savings-amount" id="total-savings-popup">$6,000</span> using Theybuild.io</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     

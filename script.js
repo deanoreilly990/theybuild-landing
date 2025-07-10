@@ -877,8 +877,9 @@ class TaxOptimizationStory {
         this.scenarioTitle = document.getElementById('scenario-title');
         this.scenarioSubtitle = document.getElementById('scenario-subtitle');
         this.incomeSource = document.getElementById('income-source');
+        this.investmentSource = document.getElementById('investment-source');
         this.outcomeGrid = document.getElementById('outcome-grid');
-        this.comparisonSummary = document.getElementById('comparison-summary');
+        this.comparisonPopup = document.getElementById('comparison-popup');
         
         // Arrows
         this.taxArrow = document.getElementById('tax-arrow');
@@ -892,23 +893,27 @@ class TaxOptimizationStory {
         this.youTile = document.getElementById('you-tile');
         this.companyTile = document.getElementById('company-tile');
         this.trustTile = document.getElementById('trust-tile');
-        this.familyTile = document.getElementById('family-tile');
+        this.familyTile1 = document.getElementById('family-tile-1');
+        this.familyTile2 = document.getElementById('family-tile-2');
         
         // Amount elements
         this.taxmanAmount = document.getElementById('taxman-amount');
         this.youAmount = document.getElementById('you-amount');
         this.companyAmount = document.getElementById('company-amount');
         this.trustAmount = document.getElementById('trust-amount');
-        this.familyAmount = document.getElementById('family-amount');
+        this.familyAmount1 = document.getElementById('family-amount-1');
+        this.familyAmount2 = document.getElementById('family-amount-2');
         
         // Arrow labels
         this.taxArrowLabel = document.getElementById('tax-arrow-label');
         this.savingsArrowLabel = document.getElementById('savings-arrow-label');
         
-        // Summary elements
-        this.traditionalSummary = document.getElementById('traditional-summary');
-        this.optimizedSummary = document.getElementById('optimized-summary');
-        this.totalSavings = document.getElementById('total-savings');
+        // Popup elements
+        this.personalTax = document.getElementById('personal-tax');
+        this.personalKept = document.getElementById('personal-kept');
+        this.theybuildTax = document.getElementById('theybuild-tax');
+        this.theybuildKept = document.getElementById('theybuild-kept');
+        this.totalSavingsPopup = document.getElementById('total-savings-popup');
         
         // Controls
         this.playBtn = document.getElementById('hero-play-btn');
@@ -934,11 +939,11 @@ class TaxOptimizationStory {
         this.playBtn.disabled = true;
         this.resetStory();
         
-        // Step 1: Personal Income Scenario
-        this.showPersonalIncomeScenario();
+        // Step 1: $150K Salary
+        this.showSalaryStep();
     }
 
-    showPersonalIncomeScenario() {
+    showSalaryStep() {
         // Step 1: Show income source and tiles (1000ms)
         setTimeout(() => {
             this.incomeSource.style.opacity = '1';
@@ -946,183 +951,163 @@ class TaxOptimizationStory {
             this.youTile.classList.add('active');
         }, 500);
         
-        // Step 2: Animate tax arrow - $83,638 to taxman (2500ms)
+        // Step 2: Animate tax arrow - $39,838 to taxman (2500ms)
         setTimeout(() => {
-            this.taxArrowLabel.textContent = '$83,638 Tax';
+            this.taxArrowLabel.textContent = '$39,838 Tax';
             this.taxArrow.classList.add('active');
             this.highlightTile(this.taxmanTile);
-            this.updateAmount(this.taxmanAmount, '$83,638');
+            this.updateAmount(this.taxmanAmount, '$39,838');
         }, 2500);
         
-        // Step 3: Animate savings arrow - $166,362 to you (4000ms)
+        // Step 3: Animate remaining salary to you - $110,162 (5000ms)
         setTimeout(() => {
-            this.savingsArrowLabel.textContent = '$166,362 Remaining';
+            this.savingsArrowLabel.textContent = '$110,162 Remaining';
             this.savingsArrow.classList.add('active');
             this.highlightTile(this.youTile);
-            this.updateAmount(this.youAmount, '$166,362');
-        }, 4000);
+            this.updateAmount(this.youAmount, '$110,162');
+        }, 5000);
         
-        // Step 4: Show caption (5500ms)
+        // Step 4: Show caption (7500ms)
         setTimeout(() => {
-            this.scenarioSubtitle.textContent = 'As a sole trader, you pay $83K in tax';
+            this.scenarioSubtitle.textContent = 'You earn $150K — taxman takes $39.8K';
             this.scenarioSubtitle.style.color = '#ff4757';
             this.scenarioSubtitle.style.fontWeight = '600';
-        }, 5500);
-        
-        // Step 5: Transition to company scenario (7500ms)
-        setTimeout(() => {
-            this.transitionToCompanyScenario();
         }, 7500);
+        
+        // Step 5: Transition to investment scenario (10000ms)
+        setTimeout(() => {
+            this.showInvestmentStep();
+        }, 10000);
     }
 
-    transitionToCompanyScenario() {
-        // Fade out current scenario elements
-        this.hideArrows();
+    showInvestmentStep() {
+        // Clear highlights and reset styling
         this.clearHighlights();
-        
-        // Update scenario title and subtitle
-        this.scenarioTitle.textContent = 'Step 2: Company Structure';
-        this.scenarioSubtitle.textContent = '$135K salary + $115K profit through company';
         this.scenarioSubtitle.style.color = '';
         this.scenarioSubtitle.style.fontWeight = '';
         
-        // Reset amounts
-        this.updateAmount(this.taxmanAmount, '$0');
-        this.updateAmount(this.youAmount, '$0');
+        // Update scenario title and subtitle
+        this.scenarioTitle.textContent = 'Step 2: $100K Investment → 30% Growth';
+        this.scenarioSubtitle.textContent = 'Investment earns $30K profit';
         
-        // Reset and show company scenario (1000ms)
+        // Show investment source and company tile (1000ms)
         setTimeout(() => {
-            this.showCompanyScenario();
+            this.investmentSource.style.display = 'block';
+            this.investmentSource.style.opacity = '1';
+            this.companyTile.style.display = 'block';
+            this.companyTile.classList.add('active');
         }, 1000);
-    }
-
-    showCompanyScenario() {
-        // Show company tile
-        this.companyTile.style.display = 'block';
-        this.companyTile.classList.add('active');
         
-        // Step 1: Show salary portion - $135K salary → $31,288 tax (1500ms)
-        setTimeout(() => {
-            this.taxArrowLabel.textContent = '$31,288 Salary Tax';
-            this.taxArrow.classList.add('active');
-            this.highlightTile(this.taxmanTile);
-            this.updateAmount(this.taxmanAmount, '$31,288');
-        }, 1500);
-        
-        // Step 2: Show remaining salary goes to you - $103,712 (3000ms)
-        setTimeout(() => {
-            this.savingsArrowLabel.textContent = '$103,712 Take-home';
-            this.savingsArrow.classList.add('active');
-            this.highlightTile(this.youTile);
-            this.updateAmount(this.youAmount, '$103,712');
-        }, 3000);
-        
-        // Step 3: Show company profit tax - $115K → 25% tax ($28,750) (4500ms)
+        // Show company tax: 25% of $30K = $7,500 (3500ms)
         setTimeout(() => {
             this.companyTaxArrow.style.display = 'block';
             this.companyTaxArrow.classList.add('active');
             this.highlightTile(this.taxmanTile);
-            // Update total tax: $31,288 + $28,750 = $60,038
-            this.updateAmount(this.taxmanAmount, '$60,038');
-        }, 4500);
+            // Add to existing tax: $39,838 + $7,500 = $47,338
+            this.updateAmount(this.taxmanAmount, '$47,338');
+        }, 3500);
         
-        // Step 4: Show company retained earnings - $86,250 (6000ms)
+        // Show company retained earnings: $22,500 (6000ms)
         setTimeout(() => {
             this.highlightTile(this.companyTile);
-            this.updateAmount(this.companyAmount, '$86,250');
+            this.updateAmount(this.companyAmount, '$22,500');
         }, 6000);
         
-        // Step 5: Show summary caption (7500ms)
+        // Step 5: Transition to trust scenario (8500ms)
         setTimeout(() => {
-            this.scenarioSubtitle.textContent = 'With a company, you pay $60K in tax and keep $190K — saving $23K';
-            this.scenarioSubtitle.style.color = '#27ae60';
-            this.scenarioSubtitle.style.fontWeight = '600';
-        }, 7500);
-        
-        // Step 6: Transition to trust scenario (9500ms)
-        setTimeout(() => {
-            this.transitionToTrustScenario();
-        }, 9500);
+            this.showTrustStep();
+        }, 8500);
     }
 
-    transitionToTrustScenario() {
-        // Update scenario title and subtitle
-        this.scenarioTitle.textContent = 'Step 3: Trust Structure (Optional)';
-        this.scenarioSubtitle.textContent = 'Further optimize by distributing through a trust';
+    showTrustStep() {
+        // Clear highlights and reset styling
+        this.clearHighlights();
         this.scenarioSubtitle.style.color = '';
         this.scenarioSubtitle.style.fontWeight = '';
         
-        // Clear highlights
-        this.clearHighlights();
+        // Update scenario title and subtitle
+        this.scenarioTitle.textContent = 'Step 3: Trust + Family Distribution';
+        this.scenarioSubtitle.textContent = 'Distribute through trust to family members';
         
-        // Show trust scenario (1000ms)
+        // Show trust and family tiles (1000ms)
         setTimeout(() => {
-            this.showTrustDistributions();
+            this.trustTile.style.display = 'block';
+            this.trustTile.classList.add('active');
+            this.familyTile1.style.display = 'block';
+            this.familyTile1.classList.add('active');
+            this.familyTile2.style.display = 'block';
+            this.familyTile2.classList.add('active');
         }, 1000);
-    }
-
-    showTrustDistributions() {
-        // Show trust and family tiles
-        this.trustTile.style.display = 'block';
-        this.trustTile.classList.add('active');
-        this.familyTile.style.display = 'block';
-        this.familyTile.classList.add('active');
         
-        // Step 1: Move $86,250 from company to trust (1500ms)
+        // Move $22,500 from company to trust (3500ms)
         setTimeout(() => {
             this.trustArrow.style.display = 'block';
             this.trustArrow.classList.add('active');
             this.highlightTile(this.trustTile);
-            this.updateAmount(this.trustAmount, '$86,250');
+            this.updateAmount(this.trustAmount, '$22,500');
             this.updateAmount(this.companyAmount, '$0');
-        }, 1500);
+        }, 3500);
         
-        // Step 2: Distribute tax-free amounts to family (3000ms)
+        // Distribute to family members: $11,250 each (6000ms)
         setTimeout(() => {
             this.distributionArrow.style.display = 'block';
             this.distributionArrow.classList.add('active');
-            this.highlightTile(this.familyTile);
-            // $18,200 × 3 family members = $54,600 tax-free
-            this.updateAmount(this.familyAmount, '$54,600');
-            this.updateAmount(this.trustAmount, '$31,650'); // $86,250 - $54,600
-        }, 3000);
-        
-        // Step 3: Show additional distribution to you (4500ms)
-        setTimeout(() => {
-            this.highlightTile(this.youTile);
-            // Add extra distribution to you from trust
-            this.updateAmount(this.youAmount, '$135,362'); // $103,712 + $31,650
-        }, 4500);
-        
-        // Step 4: Show final caption (6000ms)
-        setTimeout(() => {
-            this.scenarioSubtitle.textContent = 'Trust allows tax-free income distribution to family — reduce tax even more';
-            this.scenarioSubtitle.style.color = '#8e44ad';
-            this.scenarioSubtitle.style.fontWeight = '600';
+            this.highlightTile(this.familyTile1);
+            this.highlightTile(this.familyTile2);
+            this.updateAmount(this.familyAmount1, '$11,250');
+            this.updateAmount(this.familyAmount2, '$11,250');
+            this.updateAmount(this.trustAmount, '$0');
         }, 6000);
         
-        // Step 5: Show final comparison (8000ms)
+        // Show caption (8500ms)
+        setTimeout(() => {
+            this.scenarioSubtitle.textContent = 'Distribute $11,250 each — under tax-free threshold';
+            this.scenarioSubtitle.style.color = '#8e44ad';
+            this.scenarioSubtitle.style.fontWeight = '600';
+        }, 8500);
+        
+        // Show final comparison popup (11000ms)
         setTimeout(() => {
             this.showFinalComparison();
-        }, 8000);
+        }, 11000);
     }
+
+
 
     showFinalComparison() {
         this.clearHighlights();
-        this.comparisonSummary.style.display = 'grid';
         
-        // Animate summary cards
+        // Show the comparison popup
+        this.comparisonPopup.style.display = 'flex';
+        
+        // Animate popup appearance
         setTimeout(() => {
-            this.traditionalSummary.textContent = '$166,362'; // Sole trader amount
-            this.optimizedSummary.textContent = '$189,962'; // Company + Trust total ($135,362 + $54,600)
-            this.totalSavings.textContent = '+$23,600';
-        }, 500);
+            this.comparisonPopup.classList.add('active');
+        }, 200);
         
-        // Enable replay button
+        // Populate comparison data (800ms)
+        setTimeout(() => {
+            // Personal Setup: $150K salary + $30K investment profit = $180K
+            // Tax: $39,838 (salary) + $13,500 (investment at personal rate 45%) = $53,338
+            // Kept: $180K - $53,338 = $126,662
+            this.personalTax.textContent = '$53,338';
+            this.personalKept.textContent = '$126,662';
+            
+            // Company + Trust Setup: 
+            // Tax: $39,838 (salary) + $7,500 (company tax) = $47,338
+            // Kept: $110,162 (salary) + $22,500 (distributed through trust) = $132,662
+            this.theybuildTax.textContent = '$47,338';
+            this.theybuildKept.textContent = '$132,662';
+            
+            // Savings: $132,662 - $126,662 = $6,000
+            this.totalSavingsPopup.textContent = '$6,000';
+        }, 800);
+        
+        // Enable replay button (3000ms)
         setTimeout(() => {
             this.isAnimating = false;
             this.playBtn.disabled = false;
-        }, 1500);
+        }, 3000);
     }
 
     hideArrows() {
@@ -1137,7 +1122,7 @@ class TaxOptimizationStory {
     }
 
     clearHighlights() {
-        [this.taxmanTile, this.youTile, this.companyTile, this.trustTile, this.familyTile].forEach(tile => {
+        [this.taxmanTile, this.youTile, this.companyTile, this.trustTile, this.familyTile1, this.familyTile2].forEach(tile => {
             if (tile) tile.classList.remove('highlighted');
         });
     }
@@ -1157,14 +1142,18 @@ class TaxOptimizationStory {
 
     resetStory() {
         // Reset scenario
-        this.scenarioTitle.textContent = 'Step 1: Sole Trader';
-        this.scenarioSubtitle.textContent = '$250,000 income - see what happens to your money';
+        this.scenarioTitle.textContent = 'Step 1: Your Salary';
+        this.scenarioSubtitle.textContent = '$150,000 salary - see what happens to your money';
         this.scenarioSubtitle.style.color = '';
         this.scenarioSubtitle.style.fontWeight = '';
         
-        // Reset income amount
+        // Reset income amounts
         const incomeAmount = this.incomeSource.querySelector('.income-amount');
-        incomeAmount.textContent = '$250,000';
+        incomeAmount.textContent = '$150,000';
+        
+        // Hide investment source
+        this.investmentSource.style.display = 'none';
+        this.investmentSource.style.opacity = '0';
         
         // Hide and reset arrows
         this.hideArrows();
@@ -1177,14 +1166,14 @@ class TaxOptimizationStory {
         this.savingsArrowLabel.textContent = 'Remaining';
         
         // Hide optional tiles
-        [this.companyTile, this.trustTile, this.familyTile].forEach(tile => {
+        [this.companyTile, this.trustTile, this.familyTile1, this.familyTile2].forEach(tile => {
             if (tile) {
                 tile.style.display = 'none';
                 tile.classList.remove('active');
             }
         });
         
-        // Reset all tiles
+        // Reset main tiles
         [this.taxmanTile, this.youTile].forEach(tile => {
             if (tile) tile.classList.remove('active');
         });
@@ -1197,10 +1186,12 @@ class TaxOptimizationStory {
         this.updateAmount(this.youAmount, '$0');
         this.updateAmount(this.companyAmount, '$0');
         this.updateAmount(this.trustAmount, '$0');
-        this.updateAmount(this.familyAmount, '$0');
+        this.updateAmount(this.familyAmount1, '$0');
+        this.updateAmount(this.familyAmount2, '$0');
         
-        // Hide comparison
-        this.comparisonSummary.style.display = 'none';
+        // Hide comparison popup
+        this.comparisonPopup.style.display = 'none';
+        this.comparisonPopup.classList.remove('active');
         
         // Reset income source
         this.incomeSource.style.opacity = '0';
