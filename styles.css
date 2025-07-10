@@ -613,6 +613,11 @@ body {
     animation: flowBlue 2s ease-in-out infinite;
 }
 
+.purple-arrow {
+    background: linear-gradient(90deg, #8e44ad, #9b59b6);
+    animation: flowPurple 2s ease-in-out infinite;
+}
+
 .arrow-head {
     width: 0;
     height: 0;
@@ -630,6 +635,10 @@ body {
 
 .blue-head {
     border-left: 12px solid var(--primary-cyan);
+}
+
+.purple-head {
+    border-left: 12px solid #8e44ad;
 }
 
 .arrow-label {
@@ -887,6 +896,15 @@ body {
 }
 
 @keyframes flowBlue {
+    0%, 100% { 
+        background-position: 0% 50%;
+    }
+    50% { 
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes flowPurple {
     0%, 100% { 
         background-position: 0% 50%;
     }
